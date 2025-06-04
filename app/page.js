@@ -1,9 +1,10 @@
 import Image from "next/image";
+import Login from "./login/components/Login";
+import MultiStepPage from "./multistep-form/page";
 
 export default function Home() {
   return (
-    <div>
-      <h1 className="text-red-400" >hello world</h1>
-    </div>
+    // <Login />
+    <MultiStepPage />
   );
 }
