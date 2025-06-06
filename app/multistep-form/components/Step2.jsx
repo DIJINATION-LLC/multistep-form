@@ -2,16 +2,15 @@
 "use client";
 import React from "react";
 import { useStep } from "../context/Context";
+import StepHeader from "./StepHeader";
+
 
 export default function Step2() {
   const { setCurrentStep } = useStep();
 
   return (
     <div className="flex-1 flex flex-col p-6 overflow-auto">
-      <h2 className="text-2xl font-bold text-[#0E0C69] mb-1">Welcome, Joshua.</h2>
-      <p className="text-sm text-gray-600 mb-6">
-        You’re scheduled to see John Lavery, MD at 4:30pm.
-      </p>
+      <StepHeader />
 
       <div className="flex flex-col gap-6 w-full max-w-xl">
         <h3 className="text-xl font-semibold text-[#0E0C69]">Add a Photo</h3>

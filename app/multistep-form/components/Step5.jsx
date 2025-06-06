@@ -2,6 +2,8 @@
 import React from "react";
 import Image from "next/image";
 import { useStep } from "../context/Context";
+import StepHeader from "./StepHeader";
+
 
 export default function Step5() {
   const { setCurrentStep } = useStep();
@@ -12,14 +14,7 @@ export default function Step5() {
 
   return (
     <div className="w-full h-full flex flex-col py-6 items-center px-4 sm:px-10 text-center">
-      {/* Welcome Text */}
-      <div className="mb-4">
-        <h1 className="text-2xl font-bold text-[#0E0C69]">Welcome, Joshua.</h1>
-        <p className="text-gray-500 text-sm mt-1">
-          You're scheduled to see John Lavery, MD at 4:30pm.
-        </p>
-        <hr className="mt-4 border-gray-300" />
-      </div>
+      <StepHeader />
 
       {/* Animation / Image */}
       <div className="my-6">
