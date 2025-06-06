@@ -13,6 +13,8 @@ import Step5 from "./components/Step5";
 import Step6 from "./components/Step6";
 import Step7 from "./components/Step7";
 import Step8 from "./components/Step8";
+import Step9 from "./components/Step9";
+import Step10 from "./components/Step10";
 // ... import all up to Step12
 
 const StepRenderer = () => {
@@ -28,6 +30,8 @@ const StepRenderer = () => {
       case 6: return <Step6 />
       case 7 : return <Step7 />
       case 8 : return <Step8 />
+      case 9 : return <Step9 />
+      case 10 : return <Step10 />
       // ...
       case 12: return <Step12 />;
       default: return <Step1 />;
