@@ -2,20 +2,23 @@
 "use client";
 import React from "react";
 import { useState , useRef } from "react";
-import { useStep } from "../context/Context";
+// import { useStep } from "../context/Context";
 import StepHeader from "./StepHeader";
 import SignatureCanvas from 'react-signature-canvas'
+import Step9a from "./Step9a";
 
 export default function Step9() {
-  const { setCurrentStep } = useStep();
+  // const { setCurrentStep } = useStep();
   const [signature , setSignature] = useState()
+  const [showNext , setShowNext] = useState(false)
   const [] = useState()
-    const goToNextStep = () => {
-    setCurrentStep((prev) => prev + 1);
-  };
-
+ 
   const ClearSign = () =>{
     signature.clear()
+  }
+
+  if (showNext) { 
+    <Step9a />
   }
 
   return (
@@ -40,7 +43,7 @@ export default function Step9() {
          Clear
         </button>
         <button
-          onClick={goToNextStep}
+          onClick={()=>{setShowNext(true)}}
           className="mt-4 bg-[#0E0C69] text-white px-6 py-2 rounded hover:opacity-90 w-full sm:w-fit"
         >
           Next Step

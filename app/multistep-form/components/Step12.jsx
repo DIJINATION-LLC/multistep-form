@@ -1,0 +1,97 @@
+"use client";
+import React, { useState } from "react";
+import StepHeader from "./StepHeader";
+
+const questions = [
+  {
+    text: "Little interest or pleasure in doing things",
+    name: "pleasure",
+  },
+  {
+    text: "Feeling down, depressed, or hopeless",
+    name: "hopeless",
+  },
+];
+
+const options = [
+  "Not at all",
+  "Several days",
+  "More than half the days",
+  "Nearly every day",
+];
+
+export default function Step12() {
+  const [showSurvey, setShowSurvey] = useState(false);
+
+  if (showSurvey) {
+    return <SurveyComplete />;
+  }
+
+  return (
+    <div className="w-full h-full flex flex-col py-6 justify-center items-center px-4 sm:px-10">
+      <StepHeader />
+      {/* Sticky Heading */}
+      <div className=" py-4 w-full text-left  ">
+        <h1 className="text-2xl font-bold text-[#0E0C69] text-left">
+          Wellness Questionnaire
+        </h1>
+        <p className="text-left text-sm text-gray-500 mt-1">
+          Over the last two weeks, how often have you been bothered by any of
+          the following problems?
+        </p>
+      </div>
+
+      {/* Questions */}
+      <div className="w-full max-w-xl flex-1  pt-4 pb-6 space-y-6">
+        {questions.map((q, idx) => (
+          <div key={idx}>
+            <p className="text-sm font-medium text-[#0E0C69] mb-2">
+              {q.text}
+              <span className="text-red-500">*</span>
+            </p>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              {options.map((opt, i) => (
+                <label
+                  key={i}
+                  className="border border-[#0E0C69] text-[#0E0C69] text-center py-2 px-3 rounded-md hover:bg-[#0E0C69] hover:text-white cursor-pointer transition"
+                >
+                  <input
+                    type="radio"
+                    name={q.name}
+                    value={opt}
+                    className="hidden"
+                  />
+                  {opt}
+                </label>
+              ))}
+            </div>
+          </div>
+        ))}
+        <p className="text-xs text-red-500 mt-2">* Required</p>
+        <div className="bg-white w-full  py-4">
+          <button
+            onClick={() => setShowSurvey(true)}
+            className="w-full bg-[#0E0C69] text-white py-3 rounded-md text-center font-medium hover:opacity-90 transition"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Dummy Survey Component
+function SurveyComplete() {
+  return (
+    <div className="w-full h-full flex flex-col justify-center items-center text-center px-4 sm:px-10">
+      <h1 className="text-2xl font-bold text-[#0E0C69] mb-4">
+        Survey Completed!
+      </h1>
+      <p className="text-gray-600 mb-6">
+        Thank you for completing the wellness questionnaire.
+      </p>
+      {/* Add any further action buttons or links here if needed */}
+    </div>
+  );
+}
