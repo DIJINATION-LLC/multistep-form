@@ -23,7 +23,7 @@ export default function Step10() {
   return (
     <div className="w-full h-full flex flex-col  justify-center items-center p-6">
       <StepHeader />
-      <div className="sticky top-0 bg-white z-10 py-4 w-full border-b border-gray-200">
+      <div className="sticky top-0 bg-white z-10 py-4 w-full border-b border-gray-200" >
         <h1 className="text-2xl font-bold text-[#0E0C69] text-center">
           Allergies
         </h1>
