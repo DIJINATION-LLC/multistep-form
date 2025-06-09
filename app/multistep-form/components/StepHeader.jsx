@@ -10,7 +10,7 @@ const StepHeader = () => {
         <p className="text-gray-500 text-sm mt-1">
           You're scheduled to see John Lavery, MD at 4:30pm.
         </p>
-        <hr className="mt-4 border-gray-300 w-[70%] text-center m-auto" />
+        <hr className="mt-4 border-[#D4D4D4] w-full text-center m-auto" />
       </div>
   )
 }
