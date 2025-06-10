@@ -43,12 +43,12 @@ const StepRenderer = () => {
   return (
     <div className="h-screen flex overflow-hidden">
       {/* Sidebar */} 
-      <aside className=" w-[35%] bg-[#0E0C69] text-white overflow-y-auto">
+      <aside className=" w-[40%] bg-[url(/sidebar.png)] bg-cover text-white overflow-y-auto">
         <SidebarSteps />
       </aside>
 
       {/* Step Content */}
-      <main className="w-[65%] overflow-y-auto bg-[#F9FAFB]">
+      <main className="w-[60%] overflow-y-auto bg-[#F9FAFB]">
         {renderStep()}
       </main>
     </div>

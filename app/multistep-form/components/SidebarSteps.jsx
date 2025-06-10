@@ -1,7 +1,7 @@
-// multistep/components/SidebarSteps.jsx
 "use client";
 import React from "react";
 import { useStep } from "../context/Context";
+import Styles from "@/app/styles/style"
 
 export default function SidebarSteps() {
   const { currentStep, setCurrentStep } = useStep();
@@ -22,27 +22,46 @@ export default function SidebarSteps() {
   ];
 
   return (
-    <div className="px-5 py-12 space-y-10">
+    <div className="px-12 py-12 space-y-4 relative">
       {steps.map((label, index) => {
         const stepNumber = index + 1;
         const isActive = currentStep === stepNumber;
+        const isCompleted = currentStep > stepNumber;
 
         return (
           <div
             key={stepNumber}
-            className={`flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer ${
-              isActive ? "bg-white text-[#0E0C69]" : "text-white hover:bg-[#1a1975]"
-            }`}
+            className={`flex gap-4 items-start relative z-10 cursor-pointer group transition`}
             onClick={() => setCurrentStep(stepNumber)}
           >
+            {/* Vertical timeline line */}
+            <div className="flex flex-col items-center">
+              {/* Dot */}
+              <div
+                className={`w-4 h-4 rounded-full border-2 ${
+                  isActive || isCompleted
+                    ? "bg-[#1f93dc] border-[#fff]"
+                    : "border-white"
+                }`}
+              ></div>
+
+              {/* Line (except last step) */}
+              {index !== steps.length - 1 && (
+                <div className="w-px h-5 my-5 bg-white opacity-50"></div>
+              )}
+            </div>
+
+            {/* Text Part */}
             <div
-              className={`h-6 w-6 flex items-center justify-center rounded-full text-xs font-bold ${
-                isActive ? "bg-[#0E0C69] text-white" : "border border-white"
+              className={`py-4 px-3 rounded-md w-full ${
+                isActive ? "bg-[#ffffff2f] " : "text-white group-hover:bg-[#1a1975]"
               }`}
             >
-              {stepNumber}
+              <div className="text-[10px] uppercase font-semibold text-gray-400 tracking-wide">
+                Step {stepNumber}
+              </div>
+              <div className="text-sm font-medium">{label}</div>
             </div>
-            <span className="text-sm font-medium">{label}</span>
           </div>
         );
       })}
