@@ -11,11 +11,40 @@ export default function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    
-    document.cookie = "logged_in=true; path=/;" 
-    router.push('/multistep-form')
-  };
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+
+  const alreadyExists = existingUsers.find(
+    (user) =>
+      user.firstName === form.firstName &&
+      user.lastName === form.lastName &&
+      user.dob === form.dob
+  );
+
+  if (alreadyExists) {
+    setError("You are already checked-in!");
+    return;
+  }
+
+  // Save user data
+  const updatedUsers = [...existingUsers, form];
+  localStorage.setItem("users", JSON.stringify(updatedUsers));
+  localStorage.setItem("currentUser", JSON.stringify(form));
+
+  // ✅ Set token so that AuthContext detects it
+  localStorage.setItem("userToken", "checkedInUser");
+
+  // ✅ Set cookie for extra safety (optional)
+  document.cookie = "checked_in=true; path=/;";
+
+  setTimeout(()=>{
+    router.push("/multistep-form")
+     e.preventDefault();
+  }, 500)
+};
+
 
   return (
     <div className="max-w-md mx-auto mt-10 bg-white shadow-md p-8 rounded-lg">
@@ -42,6 +71,13 @@ export default function Login() {
         <button className="w-full bg-primary text-black py-2 rounded-md"
          onClick={handleSubmit} 
         >Check-In</button>
+        <button onClick={() => {
+  localStorage.removeItem("users");
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("userToken");
+  document.cookie = "checked_in=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  window.location.href = "/";
+}}>Logout / Reset</button>
       </form>
       <p className="text-center mt-4 text-sm text-gray-500">Powered by Dijination</p>
     </div>

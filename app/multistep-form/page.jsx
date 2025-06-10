@@ -3,7 +3,10 @@
 
 import React from "react";
 import { StepProvider, useStep } from "./context/Context";
+import withAuth from "@/app/hoc/withAuth";
 import SidebarSteps from "./components/SidebarSteps";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 import Step1 from "./components/Step1";
 import Step2 from "./components/Step2";
@@ -55,10 +58,28 @@ const StepRenderer = () => {
   );
 };
 
-export default function MultistepPage() {
+ function MultistepPage() {
+const router = useRouter();
+  const [currentUser, setCurrentUser] = useState(null);
+  
+ useEffect(() => {
+  
+  const user = localStorage.getItem("currentUser");
+  if (user) {
+    setCurrentUser(JSON.parse(user));
+  } else {
+    router.push("/"); // Optional: but usually this won’t happen
+  }
+  
+}, []);
+
+
+  if (!currentUser) return null;
   return (
     <StepProvider>
-      <StepRenderer />
+      <StepRenderer user={currentUser} />
     </StepProvider>
   );
 }
+
+export default withAuth(MultistepPage);
