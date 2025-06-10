@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useStep } from "../context/Context";
-import Styles from "@/app/styles/style"
+import styles from "@/app/styles/style";
 
 export default function SidebarSteps() {
   const { currentStep, setCurrentStep } = useStep();
@@ -35,7 +35,7 @@ export default function SidebarSteps() {
             onClick={() => setCurrentStep(stepNumber)}
           >
             {/* Vertical timeline line */}
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center py-3">
               {/* Dot */}
               <div
                 className={`w-4 h-4 rounded-full border-2 ${
@@ -47,20 +47,20 @@ export default function SidebarSteps() {
 
               {/* Line (except last step) */}
               {index !== steps.length - 1 && (
-                <div className="w-px h-5 my-5 bg-white opacity-50"></div>
+                <div className="w-px h-5 my-4 bg-white opacity-50"></div>
               )}
             </div>
 
             {/* Text Part */}
             <div
-              className={`py-4 px-3 rounded-md w-full ${
+              className={`py-2 px-3 rounded-md w-full ${
                 isActive ? "bg-[#ffffff2f] " : "text-white group-hover:bg-[#1a1975]"
               }`}
             >
-              <div className="text-[10px] uppercase font-semibold text-gray-400 tracking-wide">
+              <div className={`${styles.heading3} uppercase !font-normal `}>
                 Step {stepNumber}
               </div>
-              <div className="text-sm font-medium">{label}</div>
+              <div className={`${styles.heading2}`}>{label}</div>
             </div>
           </div>
         );

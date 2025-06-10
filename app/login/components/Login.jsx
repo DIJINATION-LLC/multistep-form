@@ -12,16 +12,9 @@ export default function Login() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Simulated check
-    if (form.dob === '01/01/2000') {
-      // Save to sessionStorage/localStorage or context
-      sessionStorage.setItem('userInfo', JSON.stringify(form));
-      router.push('/multistep-form');
-    } else {
-      setError("We couldn't find an appointment matching this date of birth. Please double-check the information or contact the front desk for assistance.");
-    }
+    
+    document.cookie = "logged_in=true; path=/;" 
+    router.push('/multistep-form')
   };
 
   return (
@@ -30,7 +23,7 @@ export default function Login() {
         <img src="../public/logo.png" alt="Allen Arthritis" className="h-10" />
       </div>
       <h2 className="text-center text-2xl font-bold mb-6 text-blue-500">PATIENT CHECK-IN</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form className="space-y-4"> 
         <div>
           <label>First Name*</label>
           <input name="firstName" value={form.firstName} onChange={handleChange} required />
@@ -46,7 +39,9 @@ export default function Login() {
 
         {error && <p className="error-msg">{error}</p>}
 
-        <button className="w-full bg-primary text-white py-2 rounded-md">Check-In</button>
+        <button className="w-full bg-primary text-black py-2 rounded-md"
+         onClick={handleSubmit} 
+        >Check-In</button>
       </form>
       <p className="text-center mt-4 text-sm text-gray-500">Powered by Dijination</p>
     </div>
