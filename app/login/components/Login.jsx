@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Image from 'next/image';
+import styles from '@/app/styles/style';
 
 export default function Login() {
   const [form, setForm] = useState({ firstName: '', lastName: '', dob: '' });
@@ -58,7 +59,9 @@ const handleSubmit = (e) => {
         
         />
       </div>
-      <h2 className="text-center text-2xl font-bold mb-6 text-blue-500">PATIENT CHECK-IN</h2>
+      <hr className='text-[#D4D4D4] mx-auto ' width="80%" />
+      <h2 className={`${styles.heading2} text-center py-2  text-[#353535] `}>PATIENT CHECK-IN</h2>
+            <hr className='text-[#D4D4D4] mx-auto pt-2 ' width="80%" />
       <form className="space-y-4"> 
         <div>
           <label>First Name*</label>
