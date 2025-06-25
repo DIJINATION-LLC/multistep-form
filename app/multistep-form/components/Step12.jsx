@@ -26,25 +26,13 @@ export default function Step12() {
   const [showSurvey, setShowSurvey] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
-  if (showSurvey) {
-    return (
-      <AlertPopup
-       heading= {helper.heading}
-        message={helper.successMessage}
-        buttonText={helper.successText}
-        buttonColor={helper.success}
-        
-        img=".../public/success.png"
-        onClose={() => setShowPopup(false)}
-      />
-    );
-  }
 
   return (
     <div className="w-full h-full flex flex-col py-6 justify-center items-center px-4 sm:px-10">
       <StepHeader />
       {showPopup && (
         <AlertPopup
+          mainHeading={helper.heading}
           message={helper.successMessage}
           buttonText={helper.successText}
           buttonColor={helper.success}
