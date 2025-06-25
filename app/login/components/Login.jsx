@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Login() {
   const [form, setForm] = useState({ firstName: '', lastName: '', dob: '' });
@@ -49,7 +50,13 @@ const handleSubmit = (e) => {
   return (
     <div className="max-w-md mx-auto mt-10 bg-white shadow-md p-8 rounded-lg">
       <div className="flex justify-center mb-4">
-        <img src="../public/logo.png" alt="Allen Arthritis" className="h-10" />
+        <Image 
+         src="/logo.png"
+         alt='Allen Arthritis Logo'
+         height={120}
+         width={120}
+        
+        />
       </div>
       <h2 className="text-center text-2xl font-bold mb-6 text-blue-500">PATIENT CHECK-IN</h2>
       <form className="space-y-4"> 
