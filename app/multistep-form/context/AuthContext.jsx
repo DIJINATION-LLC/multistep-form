@@ -15,7 +15,7 @@ useEffect(() => {
     console.log("Token:", token);
     console.log("CurrentUser:", currentUser);
 
-    // Dono honay chahiye
+
     if (token && currentUser) {
       setIsAuthenticated(true);
     } else {
