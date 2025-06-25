@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import StepHeader from "./StepHeader";
 import AlertPopup from "./AlertPopup";
 import helper from "@/app/utils/helper";
+import { useStep } from "@/app/multistep-form/context/Context";
+
 
 const questions = [
   {
@@ -25,7 +27,11 @@ const options = [
 export default function Step12() {
   const [showSurvey, setShowSurvey] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-
+    const { setCurrentStep } = useStep();
+  
+ const handleNext = () => {
+    setCurrentStep((prev) => prev + 1);
+  };
 
   return (
     <div className="w-full h-full flex flex-col py-6 justify-center items-center px-4 sm:px-10">
@@ -37,7 +43,7 @@ export default function Step12() {
           buttonText={helper.successText}
           buttonColor={helper.success}
           img="/success.png"
-          onClose={() => setShowPopup(false)}
+          onClose={handleNext}
         />
       )}
 

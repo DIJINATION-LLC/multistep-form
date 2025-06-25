@@ -8,6 +8,7 @@ import SidebarSteps from "./components/SidebarSteps";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
+import Survey from "./components/Survey";
 import Step1 from "./components/Step1";
 import Step2 from "./components/Step2";
 import Step3 from "./components/Step3";
@@ -37,19 +38,26 @@ const StepRenderer = () => {
       case 10 : return <Step10 />
       case 11 : return <Step10 />
       case 12: return <Step12 />;
+      case 13 : return <Survey />
       default: return <Step1 />;
     }
   };
+  
+const isSurvey = currentStep === 13;
 
   return (
-    <div className="h-screen flex overflow-hidden">
-      {/* Sidebar */} 
-      <aside className=" w-[45%] bg-[url(/sidebar.png)] bg-cover text-white overflow-y-auto">
-        <SidebarSteps />
-      </aside>
+  <div className="h-screen flex overflow-hidden">
+      {/* Sidebar only shown in steps 1–12 */}
+      {!isSurvey && (
+        <aside className="w-[45%] bg-[url(/sidebar.png)] bg-cover text-white overflow-y-auto">
+          <SidebarSteps />
+        </aside>
+      )}
 
-      {/* Step Content */}
-      <main className="w-[55%] overflow-y-auto bg-[#F9FAFB]">
+      {/* Dynamically change width of main content */}
+      <main
+        className={`${isSurvey ? "w-full" : "w-[55%]"} overflow-y-auto bg-[#F9FAFB]`}
+      >
         {renderStep()}
       </main>
     </div>
