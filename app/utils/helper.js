@@ -6,7 +6,8 @@ const helper = {
   errorText: "Retry",
 
   success: "success",
-  danger: "danger"
+  danger: "danger",
+  heading : "Thank You !"
 };
 
 export default helper;

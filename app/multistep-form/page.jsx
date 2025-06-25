@@ -17,10 +17,8 @@ import Step6 from "./components/Step6";
 import Step7 from "./components/Step7";
 import Step8 from "./components/Step8";
 import Step9 from "./components/Step9";
-// import Step9a from "./components/Step9a";
 import Step10 from "./components/Step10";
 import Step12 from "./components/Step12";
-// ... import all up to Step12
 
 const StepRenderer = () => {
   const { currentStep } = useStep();
@@ -68,7 +66,7 @@ const router = useRouter();
   if (user) {
     setCurrentUser(JSON.parse(user));
   } else {
-    router.push("/"); // Optional: but usually this won’t happen
+    router.push("/"); 
   }
   
 }, []);

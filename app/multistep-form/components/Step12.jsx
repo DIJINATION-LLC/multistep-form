@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import StepHeader from "./StepHeader";
+import AlertPopup from "./AlertPopup";
+import helper from "@/app/utils/helper";
 
 const questions = [
   {
@@ -22,14 +24,35 @@ const options = [
 
 export default function Step12() {
   const [showSurvey, setShowSurvey] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   if (showSurvey) {
-    return <SurveyComplete />;
+    return (
+      <AlertPopup
+       heading= {helper.heading}
+        message={helper.successMessage}
+        buttonText={helper.successText}
+        buttonColor={helper.success}
+        
+        img=".../public/success.png"
+        onClose={() => setShowPopup(false)}
+      />
+    );
   }
 
   return (
     <div className="w-full h-full flex flex-col py-6 justify-center items-center px-4 sm:px-10">
       <StepHeader />
+      {showPopup && (
+        <AlertPopup
+          message={helper.successMessage}
+          buttonText={helper.successText}
+          buttonColor={helper.success}
+          img="/success.png"
+          onClose={() => setShowPopup(false)}
+        />
+      )}
+
       {/* Sticky Heading */}
       <div className=" py-4 w-full text-left  ">
         <h1 className="text-2xl font-bold text-[#0E0C69] text-left">
@@ -70,28 +93,13 @@ export default function Step12() {
         <p className="text-xs text-red-500 mt-2">* Required</p>
         <div className="bg-white w-full  py-4">
           <button
-            onClick={() => setShowSurvey(true)}
+            onClick={() => setShowPopup(true)}
             className="w-full bg-[#0E0C69] text-white py-3 rounded-md text-center font-medium hover:opacity-90 transition"
           >
             Continue
           </button>
         </div>
       </div>
-    </div>
-  );
-}
-
-// Dummy Survey Component
-function SurveyComplete() {
-  return (
-    <div className="w-full h-full flex flex-col justify-center items-center text-center px-4 sm:px-10">
-      <h1 className="text-2xl font-bold text-[#0E0C69] mb-4">
-        Survey Completed!
-      </h1>
-      <p className="text-gray-600 mb-6">
-        Thank you for completing the wellness questionnaire.
-      </p>
-      {/* Add any further action buttons or links here if needed */}
     </div>
   );
 }
