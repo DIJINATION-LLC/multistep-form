@@ -3,6 +3,7 @@ const styles = {
 
   headline:
     "font-poppins font-bold text-[42px] leading-[66px] md:text-[66px]",
+     heading: "font-poppins font-bold md:text-[36px] text-[32px] leading-auto",
   heading1: "font-poppins font-bold md:text-[26px] text-[22px] leading-auto",
   heading2:
     "font-poppins font-semibold md:text-[22px] text-[20px] leading-auto",

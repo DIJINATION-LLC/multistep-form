@@ -3,6 +3,7 @@
 import styles from "@/app/styles/style";
 import { useState } from "react";
 import { FaFrown, FaMeh, FaSmile, FaGrin } from "react-icons/fa";
+import Image from "next/image";
 
 export default function Survey() {
   const [form, setForm] = useState({
@@ -26,12 +27,16 @@ export default function Survey() {
   };
 
   return (
-    <div className="w-full h-full mx-auto p-10 bg-white shadow-md rounded-lg mt-6">
-      <h2 className="text-2xl font-bold text-center mb-6">Survey</h2>
+    <div className="w-full h-auto mx-auto p-10 bg-white shadow-md rounded-lg mt-6">
+            <hr className='text-[#D4D4D4] mx-auto ' width="80%" />
+
+      <h2 className={`${styles.heading} my-6 text-center`}>Survey</h2>
+            <hr className='text-[#D4D4D4] mx-auto ' width="80%" />
+
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Q1 */}
         <div>
-          <p className="font-medium mb-2">
+          <p className={`${styles.heading2} my-6`}>
             How satisfied or dissatisfied are you with the staff’s explanation of how to use the iPad?
           </p>
           <div className="flex justify-between gap-2">
@@ -53,7 +58,7 @@ export default function Survey() {
 
         {/* Q2 */}
         <div>
-          <p className="font-medium mb-2">
+          <p className={`${styles.heading2} my-6`}>
             How satisfied or dissatisfied are you with the digital check-in?
           </p>
           <div className="flex justify-between gap-2">
@@ -62,7 +67,7 @@ export default function Survey() {
                 key={idx}
                 type="button"
                 onClick={() => handleRadio("digitalCheckin", val)}
-                className={`flex-1 p-10 border rounded-md flex flex-col items-center gap-1 ${
+                className={`flex-1 px-3 py-6 border rounded-md flex flex-col items-center gap-1 ${
                   form.digitalCheckin === val ? "bg-blue-100 border-blue-500" : "bg-white"
                 }`}
               >
@@ -75,21 +80,29 @@ export default function Survey() {
 
         {/* Feedback */}
         <div>
-          <p className="font-medium mb-2">Any other feedback for us?</p>
+          <p className={`${styles.heading2} my-6`}>Any other feedback for us?</p>
           <textarea
             value={form.feedback}
             onChange={handleChange}
-            className="w-full border rounded-md p-3 h-24"
+            className="w-full border rounded-md p-3 h-64"
             placeholder="Write here..."
           />
         </div>
 
         {/* Submit */}
-        <button type="submit" className="w-full bg-blue-900 text-white py-2 rounded">
+      <button type="submit" className={`w-full bg-[#012175] text-white py-5 rounded ${styles.heading2}`}>
           Submit
         </button>
       </form>
-      <p className="text-center text-sm text-gray-400 mt-6">Powered by <strong>DIJINATION</strong></p>
+       <div className="text-center m-auto align-middle w-full flex flex-col items-center">
+      <p className="text-3xl text-gray-400 mt-30">Powered by </p>
+     
+       <Image
+       src="/diji-logo.png"
+       width={500}
+       height={500}
+       />
+       </div>
     </div>
   );
 }
