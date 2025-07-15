@@ -30,7 +30,7 @@ export default function Step12() {
     const { setCurrentStep } = useStep();
   
  const handleNext = () => {
-    setCurrentStep((prev) => prev + 1);
+    setCurrentStep((setCurrentStep)=> setCurrentStep +1);
   };
 
   return (
@@ -84,13 +84,13 @@ export default function Step12() {
             </div>
           </div>
         ))}
-        <p className="text-xs text-red-500 mt-2">* Required</p>
+        <p className="text-xs text-red-500 mt-2">*Required</p>
         <div className="bg-white w-full  py-4">
           <button
             onClick={() => setShowPopup(true)}
             className="w-full bg-[#0E0C69] text-white py-3 rounded-md text-center font-medium hover:opacity-90 transition"
           >
-            Continue
+             Continue
           </button>
         </div>
       </div>

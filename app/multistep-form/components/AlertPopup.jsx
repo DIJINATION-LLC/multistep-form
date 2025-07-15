@@ -12,12 +12,12 @@ export default function AlertPopup({ mainHeading ,message, buttonText, buttonCol
   };
 
   useEffect(() => {
-    setShow(true); // trigger animation
+    setShow(true); 
     const timer = setTimeout(() => {
       handleClose();
-    }, 5000); // auto close after 5 seconds
+    }, 5000); 
 
-    return () => clearTimeout(timer); // cleanup
+    return () => clearTimeout(timer);
   }, []);
 
   const handleClose = () => {
