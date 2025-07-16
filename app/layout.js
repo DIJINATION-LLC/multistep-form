@@ -1,5 +1,6 @@
 import "./styles/globals.css";
-import { AuthProvider } from "@/app/multistep-form/context/AuthContext";
+import { AuthProvider  } from "@/app/multistep-form/context/AuthContext";
+import { PatientProvider   } from "./multistep-form/context/PatientContext";
 
 
 export const metadata = {
@@ -14,7 +15,9 @@ export default function RootLayout({ children }) {
         
       >
         <AuthProvider>
+          <PatientProvider>
         {children}
+        </PatientProvider>
         </AuthProvider>
       </body>
     </html>

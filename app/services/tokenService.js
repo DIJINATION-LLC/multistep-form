@@ -5,7 +5,7 @@ const TOKEN_EXPIRY_KEY = "athenaTokenExpiry";
 
 export const fetchToken = async () => {
   const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/oauth2/v1/token`,
+    `${process.env.NEXT_PUBLIC_ATHENA_API}/oauth2/v1/token`,
     new URLSearchParams({
       grant_type: "client_credentials",
       scope: "athena/service/Athenanet.MDP.*",
