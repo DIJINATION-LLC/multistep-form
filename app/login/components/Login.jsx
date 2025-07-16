@@ -35,8 +35,16 @@ const handleSubmit = (e) => {
   localStorage.setItem("users", JSON.stringify(updatedUsers));
   localStorage.setItem("currentUser", JSON.stringify(form));
 
-  // ✅ Set token so that AuthContext detects it
+  // Set token so that AuthContext detects it
   localStorage.setItem("userToken", "checkedInUser");
+
+ // formdata stored so that api gets in params
+  localStorage.setItem("currentUser", JSON.stringify({
+  firstName: form.firstName,
+  lastName: form.lastName,
+  dob: form.dob,  
+}));
+
 
   // ✅ Set cookie for extra safety (optional)
   document.cookie = "checked_in=true; path=/;";
