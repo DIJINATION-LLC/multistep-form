@@ -7,7 +7,9 @@ const helper = {
 
   success: "success",
   danger: "danger",
-  heading : "Thank You !"
+  heading : "Thank You !",
+
+  noRecord : "We couldn't find an appointment matching this date of birth. Please double-check the information or contact the front desk for assistance."
 };
 
 export default helper;
