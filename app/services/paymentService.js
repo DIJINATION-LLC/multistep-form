@@ -13,3 +13,7 @@ export const getAppointmentDetails = async (departmentId) => {
   return response.data;
 };
 
+export const getInsuranceDetails = async (departmentId) => {
+  const response = await api.get(`${API_ROUTES.APPOINTMENTS(departmentId)}/insurances`);
+  return response.data;
+};
