@@ -5,6 +5,8 @@ const PatientContext = createContext();
 
 export const PatientProvider = ({ children }) => {
   const [patientData, setPatientData] = useState(null);
+  const [appointmentDetails, setAppointmentDetails] = useState(null);
+ const [paymentPlan, setPaymentPlan] = useState(null);
 
   useEffect(() => {
     const storedPatient = localStorage.getItem('currentUser');
@@ -14,9 +16,13 @@ export const PatientProvider = ({ children }) => {
   }, []);
 
   return (
-    <PatientContext.Provider value={{ patientData, setPatientData }}>
-      {children}
-    </PatientContext.Provider>
+    <PatientContext.Provider value={{
+  patientData, setPatientData,
+  paymentPlan, setPaymentPlan,
+  appointmentDetails, setAppointmentDetails,
+}}>
+  {children}
+</PatientContext.Provider>
   );
 };
 

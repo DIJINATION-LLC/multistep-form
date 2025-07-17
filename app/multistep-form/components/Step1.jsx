@@ -1,23 +1,56 @@
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useStep } from "../context/Context";
 import StepHeader from "./StepHeader";
-
+import { usePatient } from "../context/PatientContext";
+import { getPaymentPlan, getAppointmentDetails } from "@/app/services/paymentService";
 
 
 
 
 export default function Step1() {
-    const { setCurrentStep } = useStep();
-  
-    const goToNextStep = () => {
-      setCurrentStep((prev) => prev + 1);
-    };
-  
+  const { setPaymentPlan, setAppointmentDetails , patientData } = usePatient();
+  const { setCurrentStep } = useStep();
+
+  const [amountDue, setAmountDue] = useState(0);
+  const [copay, setCopay] = useState(0);
+
+  useEffect(() => {
+    if (patientData?.patientid && patientData?.departmentid) {
+      fetchPaymentDetails();
+      fetchAppointmentDetails();
+    }
+  }, [patientData]);
+
+
+
+const fetchPaymentDetails = async () => {
+  try {
+    const data = await getPaymentPlan(patientData.patientid, patientData.departmentid);
+    setPaymentPlan(data);
+    setAmountDue(data?.amountdue || "N/A");
+  } catch (error) {
+    console.error("Payment Plan Error", error);
+  }
+};
+
+const fetchAppointmentDetails = async () => {
+  try {
+    const data = await getAppointmentDetails(patientData.departmentid);
+    setAppointmentDetails(data);
+    setCopay(data?.copay || "N/A");
+  } catch (error) {
+    console.error("Appointment Details Error", error);
+  }
+};
+
+
+  const goToNextStep = () => {
+    setCurrentStep((prev) => prev + 1);
+  };
+
   return (
     <div className="flex-1 p-6 flex flex-col overflow-auto">
-          <StepHeader />
-
+      <StepHeader />
       <div className="space-y-6">
         <div>
           <h3 className="text-lg font-semibold mb-2">Insurance</h3>
@@ -38,23 +71,22 @@ export default function Step1() {
           <div className="border rounded p-3 bg-white space-y-2">
             <div className="flex justify-between text-sm">
               <span>Today's Copay</span>
-              <span>$0.00</span>
+              <span>${copay}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span>Unpaid Charges</span>
-              <span>$0.00</span>
+              <span>${amountDue}</span>
             </div>
             <div className="flex justify-between font-semibold">
               <span>Total</span>
-              <span>$0.00</span>
+              <span>${parseFloat(copay) + parseFloat(amountDue)}</span>
             </div>
           </div>
         </div>
 
-        <button className="bg-[#0E0C69] text-white py-2 px-6 rounded mt-6 self-start"
-        
-        onClick={goToNextStep}
-        >Next Step</button>
+        <button className="bg-[#0E0C69] text-white py-2 px-6 rounded mt-6 self-start" onClick={goToNextStep}>
+          Next Step
+        </button>
       </div>
     </div>
   );

@@ -2,11 +2,10 @@
 
 const paracticeId = process.env.NEXT_PUBLIC_PRACTICE_ID
 const API_ROUTES = {
-  USER: "/users",
-  LOGIN: "/auth/login",
-  WELLNESS: "/wellness",
-  SURVEY: "/survey",
-  PATIENTS : `/v1/${paracticeId}/patients`
+  PATIENTS : `/v1/${paracticeId}/patients` , 
+  PAYMENT_PLAN: (patientId) => `/v1/${paracticeId}/patients/${patientId}/collectpayment/paymentplan`,
+  APPOINTMENTS: (departmentId) => `/v1/${paracticeId}/appointments/${departmentId}`,
+
 };
 
 export default API_ROUTES;

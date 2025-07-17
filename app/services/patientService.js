@@ -11,3 +11,12 @@ export const searchPatient = async (firstName, lastName, dob) => {
   });
   return response.data;
 };
+
+
+
+export const getInsuranceDetails = async (departmentId) => {
+  const response = await api.get(
+    `${API_ROUTES.APPOINTMENTS}/${departmentId}/insurances`
+  );
+  return response.data;
+};
