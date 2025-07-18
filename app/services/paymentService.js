@@ -17,3 +17,17 @@ export const getInsuranceDetails = async (departmentId) => {
   const response = await api.get(`${API_ROUTES.APPOINTMENTS(departmentId)}/insurances`);
   return response.data;
 };
+
+export const uploadPatientPhoto = async (patientId, departmentId, imageBase64) => {
+  const formData = new FormData();
+  formData.append('image', imageBase64);
+  formData.append('departmentid', departmentId);
+
+  const response = await api.post(`${API_ROUTES.PATIENT_PHOTO(patientId)}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+
+  return response.data;
+};
