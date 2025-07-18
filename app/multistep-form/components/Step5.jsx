@@ -3,10 +3,12 @@ import React from "react";
 import Image from "next/image";
 import { useStep } from "../context/Context";
 import StepHeader from "./StepHeader";
-
+import { usePatient } from "@/app/multistep-form/context/PatientContext";
+import { updatePatient } from "@/app/services/paymentService";
 
 export default function Step5() {
   const { setCurrentStep } = useStep();
+  const { patientData } = usePatient();
 
   const goToNextStep = () => {
     setCurrentStep((prev) => prev + 1);
@@ -19,7 +21,7 @@ export default function Step5() {
       {/* Animation / Image */}
       <div className="my-6">
         <Image
-          src="/billing.gif" 
+          src="/billing.gif"
           alt="Contact Info Animation"
           width={120}
           height={120}
@@ -29,30 +31,31 @@ export default function Step5() {
       {/* Info Text */}
       <div className="text-center">
         <p className="text-lg font-semibold text-[#0E0C69]">
-Is your billing info complete and up to date?        </p>
+          Is your billing info complete and up to date?{" "}
+        </p>
         <p className="text-sm text-gray-700 mt-2">
-            Joshua John
+          {`${patientData?.firstname}${patientData?.lastname}`.split()}
         </p>
 
         <div className="mt-4 space-y-1 text-sm text-gray-600">
           <p>
-            <strong>Brithday:</strong> 07/23/1995
+            <strong>Brithday:</strong> {patientData?.dob || "Not Found"}
           </p>
           <p>
-            <strong>Relationship:</strong> Self / Patient
+            <strong>Relationship:</strong>{" "}
+            {patientData?.contactrelationship || "Not Found"}
           </p>
           <p className="text-sm text-gray-700 mt-2">
-           1803 Cormier Row Suite 269
-        </p>
-         
+            {`${patientData?.address1 || "N/A"} ${
+              patientData?.address2
+            }`.split()}
+          </p>
         </div>
       </div>
 
       {/* Buttons */}
       <div className="mt-8 flex flex-wrap justify-center gap-4">
-        <button
-          className="bg-black text-white font-medium px-6 py-2 rounded-md hover:opacity-90"
-        >
+        <button className="bg-black text-white font-medium px-6 py-2 rounded-md hover:opacity-90">
           Update
         </button>
         <button
