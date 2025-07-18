@@ -6,7 +6,6 @@ import StepHeader from "./StepHeader";
 import { usePatient } from "@/app/multistep-form/context/PatientContext";
 import { updatePatient } from "@/app/services/paymentService";
 import toast, { Toaster } from "react-hot-toast";
-import { Toast } from 'primereact/toast';      
 import Loader from "./LoaderOverlay";
 
 export default function Step3() {
@@ -52,13 +51,18 @@ export default function Step3() {
 
   return (
     <div className="w-full h-full flex flex-col py-6 items-center px-4 sm:px-10 text-center relative">
-      <Toaster position="top-right"  reverseOrder={false} />
-      {isUpdating && <Loader/>}
+      <Toaster position="top-right" reverseOrder={false} />
+      {isUpdating && <Loader />}
 
       <StepHeader />
 
       <div className="my-6">
-        <Image src="/contact-info.gif" alt="Contact Info" width={120} height={120} />
+        <Image
+          src="/contact-info.gif"
+          alt="Contact Info"
+          width={120}
+          height={120}
+        />
       </div>
 
       <div className="text-center space-y-2">
@@ -68,7 +72,13 @@ export default function Step3() {
 
         {["email", "mobilephone", "homephone", "workphone"].map((field) => (
           <div key={field}>
-            <strong>{field === "email" ? "Email" : field.charAt(0).toUpperCase() + field.slice(1).replace("phone", " Phone")}</strong><br />
+            <strong>
+              {field === "email"
+                ? "Email"
+                : field.charAt(0).toUpperCase() +
+                  field.slice(1).replace("phone", " Phone")}
+            </strong>
+            <br />
             <input
               type={field === "email" ? "email" : "text"}
               name={field}
