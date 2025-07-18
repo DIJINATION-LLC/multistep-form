@@ -31,3 +31,11 @@ export const uploadPatientPhoto = async (patientId, departmentId, imageBase64) =
 
   return response.data;
 };
+
+export const updatePatient = async (patientId, payload) => {
+  const response = await api.put(`${API_ROUTES.UPDATE_PATIENT(patientId)}`, new URLSearchParams(payload));
+  return response.data;
+};
+
+
+

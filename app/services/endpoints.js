@@ -6,6 +6,7 @@ const API_ROUTES = {
   PAYMENT_PLAN: (patientId) => `/v1/${paracticeId}/patients/${patientId}/collectpayment/paymentplan`,
   APPOINTMENTS: (departmentId) => `/v1/${paracticeId}/appointments/${departmentId}`,
   PATIENT_PHOTO:(patientId) => `/v1/${paracticeId}/patients/${patientId}/photo`,
+  UPDATE_PATIENT:(patientId) => `/v1/${paracticeId}/patients/${patientId}`,
 
 };
 

@@ -11,7 +11,7 @@ const StepHeader = () => {
       
     }]
 
-    console.log("Patient data",patientData)
+    // console.log("Patient data",patientData)
   return (
      <div className="mb-4 items-center text-center">
         <h1 className={` text-[#353535] ${styles.heading1}` }>Welcome, {patientData?.firstname || "Patient"}.</h1>
