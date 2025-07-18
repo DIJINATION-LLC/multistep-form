@@ -19,9 +19,7 @@ export default function Step4() {
   const [form, setForm] = useState({
     address1: patientData?.address1 || "",
     address2: patientData?.address2 || "",
-    city: patientData?.city || "",
-    state: patientData?.state || "",
-    zip: patientData?.zip || "",
+   
     country: patientData?.country || "US", // Default country
   });
 

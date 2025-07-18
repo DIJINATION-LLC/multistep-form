@@ -19,7 +19,7 @@ export default function Step5() {
       {/* Animation / Image */}
       <div className="my-6">
         <Image
-          src="/billing.gif" // 🔁 Replace this with your actual path
+          src="/billing.gif" 
           alt="Contact Info Animation"
           width={120}
           height={120}
