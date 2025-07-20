@@ -40,7 +40,7 @@ export default function Step1() {
         patientData.departmentid
       );
       setPaymentPlan(data);
-      setAmountDue(data?.amountdue || "N/AA");
+      setAmountDue(typeof data[0]?.amountdue == "number" ? data[0]?.amountdue : "N/AA");
     } catch (error) {
       console.error("Payment Plan Error", error);
     }
@@ -50,9 +50,9 @@ export default function Step1() {
     try {
       const data = await getAppointmentDetails(patientData.departmentid);
       setAppointmentDetails(data);
-      
-      setCopay(data?.copay || "N/AA");
-      console.log("Copay Response", data?.copay)
+
+      setCopay(typeof data[0]?.copay == "number" ? data[0]?.copay : "N/AA");
+      console.log("Copay Response", data?.copay);
     } catch (error) {
       console.error("Appointment Details Error", error);
     }
@@ -85,15 +85,11 @@ export default function Step1() {
           <div className="border rounded p-3 bg-white space-y-2">
             <div className="flex justify-between text-sm">
               <span>Today's Copay</span>
-              <span>
-                {copay}
-              </span>{" "}
+              <span>{copay}</span>{" "}
             </div>
             <div className="flex justify-between text-sm">
               <span>Unpaid Charges</span>
-              <span>
-               {amountDue}
-              </span>{" "}
+              <span>{amountDue}</span>{" "}
             </div>
             <div className="flex justify-between font-semibold">
               <span>Total</span>
