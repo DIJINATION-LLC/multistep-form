@@ -119,7 +119,7 @@ export default function Login() {
       </form>
 
       <p className="text-center mt-4 text-sm text-gray-500">
-        Powered by Dijination
+        Powered by DIJINATION LLC
       </p>
     </div>
   );

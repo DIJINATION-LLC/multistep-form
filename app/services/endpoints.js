@@ -10,7 +10,9 @@ const API_ROUTES = {
   LANGUAGES : `/v1/${paracticeId}/languages` , 
   ETHNICITIES : `/v1/${paracticeId}/ethnicities`,
   RACES : `/v1/${paracticeId}/races`,
-  OCCUPATIONS : `/v1/${paracticeId}/occupations`
+  OCCUPATIONS : `/v1/${paracticeId}/occupations`,
+  ALLERGIES: (patientId , departmentId) => `/v1/${paracticeId}/chart/${patientId}/allergies?departmentid=${departmentId}`,
+  UPD_ALLERGIES : (patientId, departmentId) => `/v1/${paracticeId}/chart/${patientId}/allergies?departmentid=${departmentId}`,
 
 
 };
