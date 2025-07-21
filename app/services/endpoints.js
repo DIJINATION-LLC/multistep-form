@@ -7,6 +7,11 @@ const API_ROUTES = {
   APPOINTMENTS: (departmentId) => `/v1/${paracticeId}/appointments/${departmentId}`,
   PATIENT_PHOTO:(patientId) => `/v1/${paracticeId}/patients/${patientId}/photo`,
   UPDATE_PATIENT:(patientId) => `/v1/${paracticeId}/patients/${patientId}`,
+  LANGUAGES : `/v1/${paracticeId}/languages` , 
+  ETHNICITIES : `/v1/${paracticeId}/ethnicities`,
+  RACES : `/v1/${paracticeId}/races`,
+  OCCUPATIONS : `/v1/${paracticeId}/occupations`
+
 
 };
 
