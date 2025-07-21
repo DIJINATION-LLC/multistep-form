@@ -13,6 +13,8 @@ const API_ROUTES = {
   OCCUPATIONS : `/v1/${paracticeId}/occupations`,
   ALLERGIES: (patientId , departmentId) => `/v1/${paracticeId}/chart/${patientId}/allergies?departmentid=${departmentId}`,
   UPD_ALLERGIES : (patientId, departmentId) => `/v1/${paracticeId}/chart/${patientId}/allergies?departmentid=${departmentId}`,
+  SURVEY: `/v1/${paracticeId}/patientsatisfaction/results`,
+
 
 
 };
