@@ -1,15 +1,17 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useStep } from "@/app/multistep-form/context/Context";
+import { usePatient } from "@/app/multistep-form/context/PatientContext";
 import StepHeader from "./StepHeader";
 import { getLanguages, getEthnicities, getRaces, getOccupations } from "@/app/services/demographics";
 
-const MultiSelect = ({ selected, setSelected, options, placeholder, onSearch }) => {
+// ✅ MultiSelect Component
+const MultiSelect = ({ selected, setSelected, options, placeholder }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [search, setSearch] = useState("");
 
   const handleSelect = (item) => {
-    if (!selected.find((s) => s.id === item.id)) {
+    if (!selected.some((s) => s.id === item.id)) {
       setSelected([...selected, item]);
     }
   };
@@ -18,11 +20,11 @@ const MultiSelect = ({ selected, setSelected, options, placeholder, onSearch }) 
     setSelected(selected.filter((s) => s.id !== id));
   };
 
-  const handleSearch = (e) => {
-    const value = e.target.value;
-    setSearch(value);
-    if (onSearch) onSearch(value);
-  };
+  const filteredOptions = options.filter(
+    (item) =>
+      item.name.toLowerCase().includes(search.toLowerCase()) &&
+      !selected.some((s) => s.id === item.id)
+  );
 
   return (
     <div className="relative">
@@ -32,10 +34,7 @@ const MultiSelect = ({ selected, setSelected, options, placeholder, onSearch }) 
       >
         {selected.length === 0 && <span className="text-gray-400">{placeholder}</span>}
         {selected.map((item) => (
-          <span
-            key={item.id}
-            className="bg-[#B9EAFF] text-[#0E0C69] px-3 py-1 rounded-full flex items-center"
-          >
+          <span key={item.id} className="bg-[#B9EAFF] text-[#0E0C69] px-3 py-1 rounded-full flex items-center">
             {item.name}
             <button
               onClick={(e) => {
@@ -55,22 +54,20 @@ const MultiSelect = ({ selected, setSelected, options, placeholder, onSearch }) 
           <input
             type="text"
             value={search}
-            onChange={handleSearch}
+            onChange={(e) => setSearch(e.target.value)}
             className="w-full p-2 border-b border-gray-300"
             placeholder="Search..."
           />
           <ul className="max-h-40 overflow-y-auto">
-            {options
-              .filter((item) => !selected.find((s) => s.id === item.id))
-              .map((item) => (
-                <li
-                  key={item.id}
-                  onClick={() => handleSelect(item)}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
-                >
-                  {item.name}
-                </li>
-              ))}
+            {filteredOptions.map((item) => (
+              <li
+                key={item.id}
+                onClick={() => handleSelect(item)}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+              >
+                {item.name}
+              </li>
+            ))}
           </ul>
         </div>
       )}
@@ -80,31 +77,50 @@ const MultiSelect = ({ selected, setSelected, options, placeholder, onSearch }) 
 
 export default function Step8() {
   const { setCurrentStep } = useStep();
+  const { patientData } = usePatient();
 
   const [languages, setLanguages] = useState([]);
   const [ethnicities, setEthnicities] = useState([]);
   const [races, setRaces] = useState([]);
   const [occupations, setOccupations] = useState([]);
 
-  const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedEthnicities, setSelectedEthnicities] = useState([]);
   const [selectedRaces, setSelectedRaces] = useState([]);
   const [selectedOccupation, setSelectedOccupation] = useState("");
 
+  // ✅ Fetch API data once on mount
   useEffect(() => {
+    const fetchInitialData = async () => {
+      const lang = await getLanguages();
+      setLanguages(lang);
+      const eth = await getEthnicities();
+      setEthnicities(eth);
+      const rac = await getRaces();
+      setRaces(rac);
+      const occ = await getOccupations();
+      setOccupations(occ);
+    };
     fetchInitialData();
   }, []);
 
-  const fetchInitialData = async () => {
-    const lang = await getLanguages();
-    setLanguages(lang);
-    const eth = await getEthnicities();
-    setEthnicities(eth);
-    const rac = await getRaces();
-    setRaces(rac);
-    const occ = await getOccupations();
-    setOccupations(occ);
-  };
+  // ✅ Prefill data when patientData + fetched data ready
+  useEffect(() => {
+    if (languages.length && patientData?.language6392code) {
+      const langObj = languages.find((l) => l.id === patientData.language6392code);
+      if (langObj) setSelectedLanguage(langObj.id);
+    }
+
+    if (ethnicities.length && patientData?.ethnicitycode) {
+      const ethObj = ethnicities.find((e) => e.id === patientData.ethnicitycode);
+      if (ethObj) setSelectedEthnicities([ethObj]);
+    }
+
+    if (races.length && patientData?.racename) {
+      const raceObj = races.find((r) => r.name === patientData.racename);
+      if (raceObj) setSelectedRaces([raceObj]);
+    }
+  }, [patientData, languages, ethnicities, races]);
 
   const goToNextStep = () => {
     setCurrentStep((prev) => prev + 1);
@@ -120,7 +136,7 @@ export default function Step8() {
 
         {/* Occupation */}
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Occupation</label>
+          <label className="block text-sm font-medium mb-1 ">Occupation</label>
           <select
             value={selectedOccupation}
             onChange={(e) => setSelectedOccupation(e.target.value)}
@@ -141,10 +157,8 @@ export default function Step8() {
             Language <span className="text-red-500">*</span>
           </label>
           <select
-            value={selectedLanguage?.id || ""}
-            onChange={(e) =>
-              setSelectedLanguage(languages.find((lang) => lang.id === e.target.value))
-            }
+            value={selectedLanguage || ""}
+            onChange={(e) => setSelectedLanguage(e.target.value)}
             className="w-full border border-gray-300 rounded-md px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#0E0C69]"
           >
             <option value="">Select Language</option>
@@ -154,20 +168,13 @@ export default function Step8() {
               </option>
             ))}
           </select>
-          <div className="flex items-start  w-full gap-3 mt-3">
-            <div className="">
-              <input type="checkbox" className="mr-2" />
-             
+          <div className="flex items-start w-full gap-3 mt-3">
+             <div>
+            <input type="checkbox" className="mr-2" />
             </div>
-            <span className="text-left "> Rather Not Say</span>
+            <span>Rather Not Say</span>
           </div>
         </div>
-
-
-
-
-
-
 
         {/* Ethnicity */}
         <div className="mb-4">
@@ -178,14 +185,13 @@ export default function Step8() {
             selected={selectedEthnicities}
             setSelected={setSelectedEthnicities}
             options={ethnicities}
-            placeholder="Search Ethnicities"
+            placeholder="Select Ethnicity"
           />
-           <div className="flex items-start  w-full gap-3 mt-3">
-            <div className="">
-              <input type="checkbox" className="mr-2" />
-             
+          <div className="flex items-start w-full gap-3 mt-3">
+            <div>
+            <input type="checkbox" className="mr-2" />
             </div>
-            <span className="text-left "> Rather Not Say</span>
+            <span>Rather Not Say</span>
           </div>
         </div>
 
@@ -198,22 +204,20 @@ export default function Step8() {
             selected={selectedRaces}
             setSelected={setSelectedRaces}
             options={races}
-            placeholder="Search Races"
+            placeholder="Select Race"
           />
-         <div className="flex items-start  w-full gap-3 mt-3">
-            <div className="">
-              <input type="checkbox" className="mr-2" />
-             
+          <div className="flex items-start w-full gap-3 mt-3">
+            <div>
+            <input type="checkbox" className="mr-2" />
             </div>
-            <span className="text-left "> Rather Not Say</span>
+            <span>Rather Not Say</span>
           </div>
         </div>
 
-        {/* Continue Button */}
         <div className="text-center">
           <button
             onClick={goToNextStep}
-            className="bg-[#0E0C69] text-white font-medium px-8 py-2 rounded-md hover:opacity-90 transition"
+            className="bg-[#0E0C69] text-white font-medium px-8 py-2 rounded-md hover:opacity-90 transition w-full"
           >
             Continue
           </button>
