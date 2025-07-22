@@ -217,7 +217,7 @@ export default function Step8() {
         <div className="text-center">
           <button
             onClick={goToNextStep}
-            className="bg-[#0E0C69] text-white font-medium px-8 py-2 rounded-md hover:opacity-90 transition w-full"
+            className="bg-[#0E0C69] text-white font-medium px-8 py-3 rounded-md hover:opacity-90 transition w-full"
           >
             Continue
           </button>

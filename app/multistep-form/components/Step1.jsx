@@ -105,7 +105,7 @@ export default function Step1() {
         </div>
 
         <button
-          className="bg-[#0E0C69] text-white py-2 px-6 rounded mt-6 self-start"
+          className="bg-[#0E0C69] text-white py-3 px-6 rounded mt-6 self-start w-full"
           onClick={goToNextStep}
         >
           Next Step

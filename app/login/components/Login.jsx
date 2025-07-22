@@ -6,6 +6,7 @@ import styles from "@/app/styles/style";
 import { searchPatient } from "@/app/services/patientService";
 import { usePatient } from "@/app/multistep-form/context/PatientContext";
 import helper from "@/app/utils/helper";
+import { Loader1 } from "@/app/multistep-form/components/LoaderOverlay";
 
 export default function Login() {
   const [form, setForm] = useState({ firstName: "", lastName: "", dob: "" });
@@ -59,6 +60,9 @@ export default function Login() {
   };
   return (
     <div className=" mx-5  mt-10 bg-white shadow-md p-10 rounded-lg h-auto  ">
+          {loading && (
+       <Loader1 />
+      )}
       <div className="flex justify-center mb-4">
         <Image
           src="/logo.png"
@@ -119,6 +123,7 @@ export default function Login() {
         <button
           type="submit"
           className="mt-4 bg-[#0E0C69] text-white px-6 py-6 rounded-xl hover:opacity-90 w-full text-2xl"
+          onClick={()=>{setLoading(true)}}
         >
           Check-In
         </button>

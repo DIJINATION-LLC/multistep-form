@@ -136,7 +136,7 @@ export default function Step9() {
   // };
 
   return (
-    <div className="flex-1 flex flex-col p-6 overflow-auto">
+    <div className="flex-1 flex flex-col p-6 overflow-auto relative ">
       <Toaster position="bottom-right" reverseOrder={false} />
       {isUpdating && <Loader />}
       <StepHeader />
@@ -167,13 +167,13 @@ export default function Step9() {
           <div className="flex flex-col sm:flex-row gap-4">
             <button
               onClick={handleClear}
-              className="bg-gray-200 text-black px-6 py-2 rounded hover:opacity-90 w-full sm:w-fit"
+              className="bg-gray-200 text-black px-6 py-3 rounded hover:opacity-90 w-full "
             >
               Clear
             </button>
             <button
               onClick={handleNextFromSignature}
-              className="bg-[#0E0C69] text-white px-6 py-2 rounded hover:opacity-90 w-full sm:w-fit"
+              className="bg-[#0E0C69] text-white px-6 py-3 rounded hover:opacity-90 w-full "
             >
               Next
             </button>

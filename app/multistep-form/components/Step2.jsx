@@ -65,6 +65,7 @@ export default function Step2() {
 
       <div className="flex flex-col gap-6 w-full max-w-xl">
         <h3 className="text-xl font-semibold text-[#0E0C69]">Add a Photo</h3>
+      <hr className="text-[#D4D4D4] mx-auto pt-2 w-full"  />
         <p className="text-sm text-gray-700 leading-relaxed">
           After tapping the “Add Photo” button, aim the built-in camera toward yourself such
           that you see your reflection on the screen. Then take a photo by tapping the capture
@@ -114,7 +115,7 @@ export default function Step2() {
         <button
           onClick={handleUpload}
           disabled={!imageBase64 || uploading}
-          className="mt-4 bg-[#0E0C69] text-white px-6 py-2 rounded hover:opacity-90 w-full sm:w-fit"
+          className="mt-4 bg-[#0E0C69] text-white px-6 py-3 rounded-xl hover:opacity-90 w-full "
         >
           {uploading ? "Uploading..." : "Upload & Next Step"}
         </button>

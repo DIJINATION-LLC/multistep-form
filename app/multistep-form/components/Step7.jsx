@@ -150,11 +150,11 @@ export default function Step7() {
         </div>
 
         {/* Buttons */}
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
+        <div className="mt-8 flex flex-wrap justify-center gap-4 w-full">
           {!isEditing ? (
             <button
               onClick={() => setIsEditing(true)}
-              className="bg-black text-white font-medium px-6 py-2 rounded-md hover:opacity-90"
+              className="bg-black text-white font-medium px-20 py-3 rounded-md hover:opacity-90"
             >
               Update
             </button>
@@ -162,7 +162,7 @@ export default function Step7() {
             <button
               onClick={handleSubmitChanges}
               disabled={isUpdating}
-              className="bg-black text-white font-medium px-6 py-2 rounded-md hover:opacity-90"
+              className="bg-black text-white font-medium px-20 py-3 rounded-md hover:opacity-90"
             >
               {isUpdating ? "Saving..." : "Save Changes"}
             </button>
@@ -184,7 +184,7 @@ export default function Step7() {
                 goToNextStep();
               }
             }}
-            className="bg-[#0E0C69] text-white font-medium px-6 py-2 rounded-md hover:opacity-90"
+            className="bg-[#0E0C69] text-white font-medium px-20 py-3 rounded-md hover:opacity-90"
           >
             {isEditing ? "Cancel" : "No change"}
           </button>

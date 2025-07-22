@@ -61,8 +61,8 @@ export default function Step5() {
         <Image
           src="/billing.gif"
           alt="Billing Information"
-          width={120}
-          height={120}
+          width={250}
+          height={250}
         />
       </div>
 
@@ -155,11 +155,11 @@ export default function Step5() {
         )}
       </div>
 
-      <div className="mt-8 flex flex-wrap justify-center gap-4">
+      <div className="mt-8 flex flex-wrap justify-center gap-4 w-full">
         {!isEditing ? (
           <button
             onClick={() => setIsEditing(true)}
-            className="bg-black text-white font-medium px-6 py-2 rounded-md hover:opacity-90"
+            className="bg-black text-white font-medium px-20 py-3 rounded-xl hover:opacity-90"
           >
             Update
           </button>
@@ -167,7 +167,7 @@ export default function Step5() {
           <button
             onClick={handleSubmitChanges}
             disabled={isUpdating}
-            className="bg-black text-white font-medium px-6 py-2 rounded-md hover:opacity-90"
+            className="bg-black text-white font-medium px-15 py-3 rounded-md hover:opacity-90"
           >
             {isUpdating ? "Updating..." : "Submit Changes"}
           </button>
@@ -175,7 +175,7 @@ export default function Step5() {
 
         <button
           onClick={goToNextStep}
-          className="bg-[#0E0C69] text-white font-medium px-6 py-2 rounded-md hover:opacity-90"
+          className="bg-[#0E0C69] text-white font-medium px-20 py-3 rounded-xl hover:opacity-90"
         >
           No change
         </button>

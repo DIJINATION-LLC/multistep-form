@@ -77,7 +77,7 @@ export default function Step6() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col py-6 items-center px-4 sm:px-10 text-center">
+    <div className="w-full h-full flex flex-col py-6 items-center px-4 sm:px-10 text-center relative">
 
       <Toaster position="bottom-right" reverseOrder={false} />
       {isUpdating && <Loader />}
@@ -169,17 +169,12 @@ export default function Step6() {
         </div>
 
         {/* Save Button */}
-        <div className="text-center">
-          {/* <button
-            onClick={handleSubmitChanges}
-            className="bg-[#0E0C69] text-white font-medium px-8 py-2 rounded-md hover:opacity-90 transition"
-          >
-            Save
-          </button> */}
+        <div className="mt-8 flex flex-wrap justify-center gap-4 w-full">
+         
           {!isEditing ? (
             <button
               onClick={() => setIsEditing(true)}
-              className="bg-black text-white font-medium px-6 py-2 rounded-md hover:opacity-90"
+              className="bg-black text-white font-medium px-20 py-3 rounded-xl hover:opacity-90"
             >
               Update
             </button>
@@ -187,12 +182,19 @@ export default function Step6() {
             <button
               onClick={handleSubmitChanges}
               disabled={isUpdating}
-              className="bg-black text-white font-medium px-6 py-2 rounded-md hover:opacity-90"
+              className="bg-black text-white font-medium px-20 py-3 rounded-xl hover:opacity-90"
             >
               {isUpdating ? "Updating..." : "Submit Changes"}
             </button>
           )}
+             <button
+          onClick={goToNextStep}
+          className="bg-[#0E0C69] text-white font-medium px-20 py- rounded-xl hover:opacity-90"
+        >
+          No change
+        </button>
         </div>
+        
       </div>
     </div>
   );
