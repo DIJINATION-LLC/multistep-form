@@ -112,28 +112,28 @@ export default function Step9() {
     signatureRef.current?.clear();
   };
 
-  // const handleFinish = () => {
-  //   setCurrentStep((prev) => prev + 1); // Move to step 10
-  // };
-  const handleFinish = async () => {
-    const questionsPayload = questions.map((q, idx) => ({
-      question: q,
-      answer: responses[idx] || "" // fallback in case not answered
-    }));
-
-    const payload = {
-      patientid: patientData?.patientid,
-      encounterid: appointmentDetails.length == 1 ? appointmentDetails[0]?.encounterid:appointmentDetails?.encounterid,
-      questionnairetype: "CUSTOM",
-      TEMPLATEIDS: questionsPayload
-    };
-    debugger
-    try {
-      await addQuestions(patientData?.patientid, appointmentDetails.length == 1 ? appointmentDetails[0]?.encounterid:appointmentDetails?.encounterid, payload);
-    } catch (err) {
-      console.error("Failed to submit questionnaire:", err);
-    }
+  const handleFinish = () => {
+    setCurrentStep((prev) => prev + 1); // Move to step 10
   };
+  // const handleFinish = async () => {
+  //   const questionsPayload = questions.map((q, idx) => ({
+  //     question: q,
+  //     answer: responses[idx] || "" // fallback in case not answered
+  //   }));
+
+  //   const payload = {
+  //     patientid: patientData?.patientid,
+  //     encounterid: appointmentDetails.length == 1 ? appointmentDetails[0]?.encounterid:appointmentDetails?.encounterid,
+  //     questionnairetype: "CUSTOM",
+  //     TEMPLATEIDS: questionsPayload
+  //   };
+  //   debugger
+  //   try {
+  //     await addQuestions(patientData?.patientid, appointmentDetails.length == 1 ? appointmentDetails[0]?.encounterid:appointmentDetails?.encounterid, payload);
+  //   } catch (err) {
+  //     console.error("Failed to submit questionnaire:", err);
+  //   }
+  // };
 
   return (
     <div className="flex-1 flex flex-col p-6 overflow-auto">
