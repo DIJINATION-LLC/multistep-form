@@ -6,6 +6,7 @@ const API_ROUTES = {
   PAYMENT_PLAN: (patientId) => `/v1/${paracticeId}/patients/${patientId}/collectpayment/paymentplan`,
   APPOINTMENTS: (departmentId) => `/v1/${paracticeId}/appointments/${departmentId}`,
   PATIENT_PHOTO:(patientId) => `/v1/${paracticeId}/patients/${patientId}/photo`,
+  PATIENT_SIGNATURE:(patientId) => `/v1/${paracticeId}/patients/${patientId}/documents`,
   UPDATE_PATIENT:(patientId) => `/v1/${paracticeId}/patients/${patientId}`,
   LANGUAGES : `/v1/${paracticeId}/languages` , 
   ETHNICITIES : `/v1/${paracticeId}/ethnicities`,
@@ -16,6 +17,7 @@ const API_ROUTES = {
   SURVEY: `/v1/${paracticeId}/patientsatisfaction/results`,
 
 
+  ADD_QUESTIONS:(patientId,encounterId) => `/v1/${paracticeId}/chart/encounter/${encounterId}/questionnairescreeners`,
 
 };
 

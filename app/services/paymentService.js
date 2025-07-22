@@ -37,5 +37,17 @@ export const updatePatient = async (patientId, payload) => {
   return response.data;
 };
 
+export const uploadPatientSignature = async (patientId, formData) => {
+  const response = await api.post(`${API_ROUTES.PATIENT_SIGNATURE(patientId)}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
 
+  return response.data;
+};
 
+export const addQuestions = async (patientId, encounterId, payload) => {
+  const response = await api.post(`${API_ROUTES.ADD_QUESTIONS(patientId, encounterId)}`, new URLSearchParams(payload));
+  return response.data;
+};
