@@ -15,7 +15,7 @@ const questions = [
 
 export default function Step11() {
   const { setCurrentStep } = useStep();
-  const { patientData, appointmentDetails } = usePatient();
+  // const { patientData, appointmentDetails } = usePatient();
 
   const [answers, setAnswers] = useState({});
 
@@ -23,20 +23,24 @@ export default function Step11() {
     setAnswers({ ...answers, [questionIdx]: value });
   };
 
-  const handleFinish = async () => {
-    try {
-      const selectedTemplates = Object.keys(answers).map((key) => parseInt(key) + 100); 
-    debugger  
-      await postQuestionnaireScreener({
-        encounterId: appointmentDetails[0].encounterid,
-        templateids: selectedTemplates,
-      });
+  const handleNext = ()=> {
+     setCurrentStep((prev) => prev + 1);
+  }
 
-      setCurrentStep((prev) => prev + 1);
-    } catch (err) {
-      console.error("Submit Error", err);
-    }
-  };
+  // const handleFinish = async () => {
+  //   try {
+  //     const selectedTemplates = Object.keys(answers).map((key) => parseInt(key) + 100); 
+  //   debugger  
+  //     await postQuestionnaireScreener({
+  //       encounterId: appointmentDetails[0].encounterid,
+  //       templateids: selectedTemplates,
+  //     });
+
+  //     setCurrentStep((prev) => prev + 1);
+  //   } catch (err) {
+  //     console.error("Submit Error", err);
+  //   }
+  // };
 
   return (
     <div className="flex-1 flex flex-col p-6 overflow-auto">
@@ -68,7 +72,7 @@ export default function Step11() {
         ))}
 
         <button
-          onClick={handleFinish}
+          onClick={handleNext}
           className="mt-4 bg-[#0E0C69] text-white px-6 py-3 rounded hover:opacity-90 w-full"
         >
           Continue

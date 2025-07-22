@@ -1,10 +1,15 @@
 "use client";
+import { useRouter } from "next/navigation";
 import styles from "@/app/styles/style";
 import { useState } from "react";
 import { FaFrown, FaMeh, FaSmile, FaGrin } from "react-icons/fa";
 import Image from "next/image";
 import { submitSurvey } from "@/app/services/surveyService";
 import { usePatient } from "../context/PatientContext";
+import AlertPopup from "./AlertPopup";
+import helper from "@/app/utils/helper";
+
+
 
 const scoreMap = {
   "Very Dissatisfied": 10,
@@ -13,6 +18,7 @@ const scoreMap = {
   "Very Satisfied": 100
 };
 
+
 export default function Survey() {
    const { patientData } = usePatient()
   const [form, setForm] = useState({
@@ -20,6 +26,15 @@ export default function Survey() {
     digitalCheckin: "",
     feedback: ""
   });
+  const router = useRouter()
+
+  const [showPopup, setShowPopup] = useState(false);
+  
+
+   const handleNext = () => {
+    router.push("./login")
+  };
+  
 
   const handleRadio = (name, value) => {
     setForm({ ...form, [name]: value });
@@ -41,9 +56,10 @@ export default function Survey() {
       startdate: new Date().toLocaleDateString(),
       enddate: new Date().toLocaleDateString(),
       averagescore: avgScore.toFixed(0),
+      
       providerdata: [
         {
-          providerid: patientData?.providerid || "N/A",  
+          providerid: patientData?.primaryproviderid || "N/A",  
           departmentid: "1",  
           score: avgScore.toFixed(0),
           datapointcount: "1"
@@ -54,7 +70,7 @@ export default function Survey() {
     try {
       await submitSurvey(payload);
       console.log("Survey Submitted Successfully", payload);
-      // You can show popup here
+     
     } catch (error) {
       console.error("Survey Submission Failed", error);
     }
@@ -119,7 +135,7 @@ export default function Survey() {
         </div>
 
         {/* Submit */}
-        <button type="submit" className={`w-full bg-[#012175] text-white py-5 rounded ${styles.heading2}`}>
+        <button type="submit" className={`w-full bg-[#012175] text-white py-5 rounded ${styles.heading2}` } onClick={()=>{setShowPopup(true)}}>
           Submit
         </button>
       </form>
@@ -128,6 +144,18 @@ export default function Survey() {
         <p className="text-3xl text-gray-400 mt-30">Powered by</p>
         <Image src="/diji-logo.png" width={500} height={500} alt="Powered By" />
       </div>
+          {showPopup && (
+        <AlertPopup
+          mainHeading={helper.heading}
+          message={helper.successMessage}
+          buttonText={helper.successText}
+          buttonColor={helper.success}
+          img="/success.png"
+          onClose={handleNext}
+        />
+      )}
     </div>
+
+ 
   );
 }

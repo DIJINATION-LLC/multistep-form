@@ -4,7 +4,7 @@ import StepHeader from "./StepHeader";
 import SignatureCanvas from "react-signature-canvas";
 import jsPDF from "jspdf";
 import toast, { Toaster } from "react-hot-toast";
-import Loader from "./LoaderOverlay";
+import {Loader} from "./LoaderOverlay";
 import { uploadPatientSignature, addQuestions } from "@/app/services/paymentService";
 import { usePatient } from "../context/PatientContext";
 
