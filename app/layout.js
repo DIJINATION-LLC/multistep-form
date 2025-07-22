@@ -1,4 +1,4 @@
-import "./styles/globals.css";
+import "./styles/global.css";
 import { AuthProvider  } from "@/app/multistep-form/context/AuthContext";
 import { PatientProvider   } from "./multistep-form/context/PatientContext";
 

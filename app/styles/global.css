@@ -8,6 +8,8 @@
 }
 
 
+
+
 html, body {
   height: 100%;
   margin: 0;
@@ -17,6 +19,17 @@ html, body {
   color: #111827;
 }
 
+.dark-heading {
+  color: var(--light-black);
+}
+
+.grey-heading {
+  color: var(--grey-dark);
+}
+
+.dark-blue {
+  color: var(--dark-blue);
+}
 
 @layer utilities {
   .ipad\:block {

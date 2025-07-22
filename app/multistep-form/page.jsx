@@ -20,6 +20,7 @@ import Step8 from "./components/Step8";
 import Step9 from "./components/Step9";
 import Step10 from "./components/Step10";
 import Step12 from "./components/Step12";
+import Step11 from "./components/Step11";
 
 const StepRenderer = () => {
   const { currentStep } = useStep();
@@ -36,7 +37,7 @@ const StepRenderer = () => {
       case 8 : return <Step8 />
       case 9 : return <Step9 />
       case 10 : return <Step10 />
-      case 11 : return <Step10 />
+      case 11 : return <Step11 />
       case 12: return <Step12 />;
       case 13 : return <Survey />
       default: return <Step1 />;
