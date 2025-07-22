@@ -13,6 +13,7 @@ export const PatientProvider = ({ children }) => {
     if (storedPatient) {
       setPatientData(JSON.parse(storedPatient));
     }
+   
   }, []);
 
   return (

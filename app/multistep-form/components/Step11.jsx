@@ -23,7 +23,7 @@ export default function Step11() {
     <div className="flex-1 flex flex-col p-6 overflow-auto">
       <StepHeader />
       <div className="flex flex-col gap-6 w-full max-w-xl">
-        <h2 className="text-xl font-semibold mt-2 grey-heading " >Rapid 3</h2>
+        <h2 className="text-xl font-semibold mt-2 grey-heading " >Medications</h2>
         <hr  className="border-[#D4D4D4]  " />
     
         {questions.map((q, idx) => (
