@@ -6,7 +6,7 @@ import StepHeader from "./StepHeader";
 import { usePatient } from "@/app/multistep-form/context/PatientContext";
 import { updatePatient } from "@/app/services/paymentService";
 import toast, { Toaster } from "react-hot-toast";
-import Loader from "./LoaderOverlay";
+import {Loader} from "./LoaderOverlay";
 
 export default function Step3() {
   const { setCurrentStep } = useStep();

@@ -58,43 +58,47 @@ export default function Login() {
     }
   };
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white shadow-md p-8 rounded-lg">
+    <div className=" mx-5  mt-10 bg-white shadow-md p-10 rounded-lg h-auto  ">
       <div className="flex justify-center mb-4">
         <Image
           src="/logo.png"
           alt="Allen Arthritis Logo"
-          height={120}
-          width={120}
+          height={320}
+          width={320}
         />
       </div>
       <hr className="text-[#D4D4D4] mx-auto" width="80%" />
-      <h2 className={`${styles.heading2} text-center py-2 text-[#353535]`}>
+      <h2 className={`text-[40px] font-bold text-center py-8 grey-heading`}>
         PATIENT CHECK-IN
       </h2>
       <hr className="text-[#D4D4D4] mx-auto pt-2" width="80%" />
 
-      <form className="space-y-4" onSubmit={handleSubmit}>
-        <div>
-          <label>First Name*</label>
+      <form className="space-y-4 mt-5" onSubmit={handleSubmit}>
+        <div className={`${styles.heading2}`} >
+          <span className={`${styles.heading2}  grey-heading `} >First Name*</span>
           <input
+          className="mt-5 h-20 "
             name="firstName"
             value={form.firstName}
             onChange={handleChange}
             required
           />
         </div>
-        <div>
-          <label>Last Name*</label>
+        <div className={`${styles.heading2}`} >
+          <span className={`${styles.heading2}  grey-heading  `} >Last Name*</span>
           <input
+          className="mt-5 h-20"
             name="lastName"
             value={form.lastName}
             onChange={handleChange}
             required
           />
         </div>
-        <div>
-          <label>Date of Birth*</label>
+        <div className={`${styles.heading2}`}>
+            <span className={`${styles.heading2}  grey-heading `} >Date Of Birth*</span>
+
           <input
+          className="mt-5 h-22"
             name="dob"
             type="date"
             value={form.dob}
@@ -110,17 +114,20 @@ export default function Login() {
         
         }
 
+        
+
         <button
           type="submit"
-          className="w-full bg-primary text-black py-2 rounded-md"
+          className="mt-4 bg-[#0E0C69] text-white px-6 py-6 rounded-xl hover:opacity-90 w-full text-2xl"
         >
           Check-In
         </button>
       </form>
 
-      <p className="text-center mt-4 text-sm text-gray-500">
-        Powered by DIJINATION LLC
-      </p>
+      <div className="text-center m-auto w-full flex flex-col items-center mt-20">
+             <p className="text-3xl text-gray-400 mt-30">Powered by</p>
+             <Image src="/diji-logo.png" width={400} height={400} alt="Powered By" />
+           </div>
     </div>
   );
 }

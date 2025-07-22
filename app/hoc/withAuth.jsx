@@ -2,6 +2,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import {Loader1} from "../multistep-form/components/LoaderOverlay";
 
 const withAuth = (WrappedComponent) => {
   return function ProtectedComponent(props) {
@@ -17,7 +18,9 @@ const withAuth = (WrappedComponent) => {
     }, []);
 
     if (loading) {
-      return <div>Loading...</div>; // show loader until token is verified
+      return <div  >
+        <Loader1 />
+      </div>; // show loader until token is verified
     }
 
     if (!isAuthenticated) {
