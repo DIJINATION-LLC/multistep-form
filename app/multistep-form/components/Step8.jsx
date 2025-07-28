@@ -4,6 +4,7 @@ import { useStep } from "@/app/multistep-form/context/Context";
 import { usePatient } from "@/app/multistep-form/context/PatientContext";
 import StepHeader from "./StepHeader";
 import { getLanguages, getEthnicities, getRaces, getOccupations } from "@/app/services/demographics";
+import SearchableSelect from "./resusable-components/SearchableSelect";
 
 // ✅ MultiSelect Component
 const MultiSelect = ({ selected, setSelected, options, placeholder }) => {
@@ -136,45 +137,34 @@ export default function Step8() {
 
         {/* Occupation */}
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1 ">Occupation</label>
-          <select
-            value={selectedOccupation}
-            onChange={(e) => setSelectedOccupation(e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#0E0C69]"
-          >
-            <option value="">Select Occupation</option>
-            {occupations.map((occ) => (
-              <option key={occ.code} value={occ.code}>
-                {occ.name}
-              </option>
-            ))}
-          </select>
-        </div>
+  <label className="block text-sm font-medium mb-1">Occupation</label>
+  <SearchableSelect
+    options={occupations}
+    value={selectedOccupation}
+    onChange={setSelectedOccupation}
+    placeholder="Select Occupation"
+  />
+</div>
+
 
         {/* Language */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">
-            Language <span className="text-red-500">*</span>
-          </label>
-          <select
-            value={selectedLanguage || ""}
-            onChange={(e) => setSelectedLanguage(e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#0E0C69]"
-          >
-            <option value="">Select Language</option>
-            {languages.map((lang) => (
-              <option key={lang.id} value={lang.id}>
-                {lang.name}
-              </option>
-            ))}
-          </select>
-          <div className="flex items-start w-full gap-3 mt-3">
-             <div>
-            <input type="checkbox" className="mr-2" />
-            </div>
-            <span>Rather Not Say</span>
-          </div>
-        </div>
+       <div className="mb-4">
+  <label className="block text-sm font-medium mb-1">
+    Language <span className="text-red-500">*</span>
+  </label>
+  <SearchableSelect
+    options={languages}
+    value={selectedLanguage}
+    onChange={setSelectedLanguage}
+    placeholder="Select Language"
+  />
+  <div className="flex items-start w-full gap-3 mt-3">
+    <div>
+      <input type="checkbox" className="mr-2" />
+    </div>
+    <span>Rather Not Say</span>
+  </div>
+</div>
 
         {/* Ethnicity */}
         <div className="mb-4">
