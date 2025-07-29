@@ -5,7 +5,7 @@ import { useStep } from "@/app/multistep-form/context/Context";
 import { usePatient } from "@/app/multistep-form/context/PatientContext";
 import { Loader } from "./LoaderOverlay";
 import StepHeader from "./StepHeader";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Step11() {
   const { setCurrentStep } = useStep();
@@ -23,7 +23,7 @@ export default function Step11() {
   const [patientNote, setPatientNote] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 4;
   const totalPages = Math.ceil(medications.length / itemsPerPage);
   const paginatedData = medications.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
@@ -109,6 +109,7 @@ const handleSearchChange = async (e) => {
 
   return (
     <div className="flex-1 flex flex-col p-6 overflow-auto">
+       <Toaster position="top-right" reverseOrder={false} />
       <StepHeader />
       <div className="flex justify-between items-center my-4">
         <h1 className="text-[28px] font-semibold text-[#0E0C69]">Medications</h1>
@@ -205,7 +206,7 @@ const handleSearchChange = async (e) => {
 
       {/* Medication Table */}
       {!showAddForm && (
-        <div className="overflow-x-auto border rounded-lg">
+        <div className="overflow-x-scroll border-2 rounded-2xl">
           <table className="min-w-full text-sm text-left table-fixed">
             <thead className="bg-[#0E0C69] text-white">
               <tr>
