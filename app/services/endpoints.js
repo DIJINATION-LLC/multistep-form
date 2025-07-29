@@ -15,9 +15,11 @@ const API_ROUTES = {
   ALLERGIES: (patientId , departmentId) => `/v1/${paracticeId}/chart/${patientId}/allergies?departmentid=${departmentId}`,
   UPD_ALLERGIES : (patientId, departmentId) => `/v1/${paracticeId}/chart/${patientId}/allergies?departmentid=${departmentId}`,
   SURVEY: `/v1/${paracticeId}/patientsatisfaction/results`,
-
-
   ADD_QUESTIONS:(patientId,encounterId) => `/v1/${paracticeId}/chart/encounter/${encounterId}/questionnairescreeners`,
+ MEDICATIONS: (patientId, departmentId) => `/v1/${paracticeId}/chart/${patientId}/medications`,
+//  ADD_MEDICATION : (patientId)=> `/v1/${paracticeId}/chart/${patientId}/medications`,
+ SEARCH_MEDICATIONS :  `/v1/${paracticeId}/reference/medications`
+
 
 };
 
