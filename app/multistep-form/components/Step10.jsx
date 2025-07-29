@@ -87,7 +87,9 @@ export default function Step10() {
           <div className="flex flex-col space-y-2 text-sm text-gray-700">
             {["Yes", "No"].map((opt) => (
               <div key={opt} className="flex items-center gap-3">
-              <div><input type="radio" name="envAllergy" className="h-5 w-5" /> </div>  
+              <div>
+                <input type="radio" name="envAllergy" className="h-5 w-5" /> 
+              </div>  
                 <span>{opt}</span>
               </div>
             ))}

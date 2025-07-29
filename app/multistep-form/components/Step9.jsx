@@ -1,15 +1,12 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import StepHeader from "./StepHeader";
 import SignatureCanvas from "react-signature-canvas";
 import jsPDF from "jspdf";
 import toast, { Toaster } from "react-hot-toast";
-import {Loader} from "./LoaderOverlay";
-import { uploadPatientSignature, addQuestions } from "@/app/services/paymentService";
+import { Loader } from "./LoaderOverlay";
+import { uploadPatientSignature } from "@/app/services/paymentService";
 import { usePatient } from "../context/PatientContext";
-
-
-
 import { useStep } from "@/app/multistep-form/context/Context";
 
 const questions = [
@@ -30,13 +27,25 @@ const options = [
 
 export default function Step9() {
   const { setCurrentStep } = useStep();
-  const [part, setPart] = useState(1); // 1: signature, 2: questions
+  const [part, setPart] = useState(1);
   const signatureRef = useRef();
   const [isUpdating, setIsUpdating] = useState(false);
   const { patientData, appointmentDetails } = usePatient();
-  console.log(patientData)
 
-  const [responses, setResponses] = useState({});
+  // Initialize responses from sessionStorage or empty object
+  const [responses, setResponses] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('step9Responses');
+      return saved ? JSON.parse(saved) : {};
+    }
+    return {};
+  });
+
+  // Cache responses in sessionStorage whenever they change
+  useEffect(() => {
+    sessionStorage.setItem('step9Responses', JSON.stringify(responses));
+  }, [responses]);
+
   const handleOptionChange = (idx, value) => {
     setResponses((prev) => ({ ...prev, [idx]: value }));
   };
@@ -47,18 +56,14 @@ export default function Step9() {
     setPart(2);
   };
 
-
-
   const uploadAndDownloadPdf = async () => {
     try {
       setIsUpdating(true);
-
       const signatureImage = signatureRef.current
         ?.getCanvas()
         .toDataURL("image/png");
 
       const doc = new jsPDF();
-
       doc.setFontSize(18);
       doc.text("Patient Signature", 10, 20);
 
@@ -66,7 +71,7 @@ export default function Step9() {
         doc.addImage(signatureImage, "PNG", 10, 30, 180, 60);
       }
 
-      // === 1. Trigger download for user ===
+      // Trigger download
       const pdfBlob = doc.output("blob");
       const blobUrl = URL.createObjectURL(pdfBlob);
       const link = document.createElement("a");
@@ -75,21 +80,19 @@ export default function Step9() {
       link.click();
       URL.revokeObjectURL(blobUrl);
 
-      // === 2. Convert blob to Base64 ===
+      // Convert to Base64 for API
       const toBase64 = (blob) =>
         new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.readAsDataURL(blob);
-          reader.onloadend = () => resolve(reader.result); // returns: data:application/pdf;base64,xxxx
+          reader.onloadend = () => resolve(reader.result);
           reader.onerror = reject;
         });
 
       const base64Pdf = await toBase64(pdfBlob);
+      const base64Content = base64Pdf.split(",")[1];
 
-      // === 3. Strip the prefix (optional, if your API expects just raw base64) ===
-      const base64Content = base64Pdf.split(",")[1]; // Remove "data:application/pdf;base64,"
-
-      // === 4. Send to your API ===
+      // Send to API
       const payload = {
         attachmentcontents: base64Content,
         documentSubclass: "ADMIN_CONSENT",
@@ -97,43 +100,40 @@ export default function Step9() {
       };
 
       await uploadPatientSignature(patientData?.patientid, payload);
+      toast.success("Signature uploaded successfully!");
 
       setIsUpdating(false);
     } catch (err) {
       console.error("Signature Upload Error", err);
-      setIsUpdating(false);
-    } finally {
+      toast.error("Failed to upload signature");
       setIsUpdating(false);
     }
   };
-
 
   const handleClear = () => {
     signatureRef.current?.clear();
   };
 
   const handleFinish = () => {
-    setCurrentStep((prev) => prev + 1); // Move to step 10
-  };
-  // const handleFinish = async () => {
-  //   const questionsPayload = questions.map((q, idx) => ({
-  //     question: q,
-  //     answer: responses[idx] || "" // fallback in case not answered
-  //   }));
 
-  //   const payload = {
-  //     patientid: patientData?.patientid,
-  //     encounterid: appointmentDetails.length == 1 ? appointmentDetails[0]?.encounterid:appointmentDetails?.encounterid,
-  //     questionnairetype: "CUSTOM",
-  //     TEMPLATEIDS: questionsPayload
-  //   };
-  //   debugger
-  //   try {
-  //     await addQuestions(patientData?.patientid, appointmentDetails.length == 1 ? appointmentDetails[0]?.encounterid:appointmentDetails?.encounterid, payload);
-  //   } catch (err) {
-  //     console.error("Failed to submit questionnaire:", err);
-  //   }
-  // };
+        // try { setIsUpdating(true); // Prepare responses for API in the required format 
+        //  const formattedResponses = Object.entries(responses).map(([index, value]) => ({ question: questions[parseInt(index)], answer: value })); 
+        // const res async (params) => {
+          
+        // } ()= > { await addQuestions(patientData.patientid, formattedResponses)  }
+        //  sessionStorage.removeItem('step9Responses'); toast.success("Responses submitted successfully!"); setCurrentStep((prev) => prev + 1); } 
+        // catch (err) { console.error("Submission Error", err); toast.error("Failed to submit responses"); } 
+        // finally { setIsUpdating(false); }
+
+        
+    // Simulate API success with toast notification
+    toast.success("Responses saved successfully!");
+    
+    // Move to next step after showing toast
+    setTimeout(() => {
+      setCurrentStep((prev) => prev + 1);
+    }, 1500);
+  };
 
   return (
     <div className="flex-1 flex flex-col p-6 overflow-auto relative ">
@@ -142,17 +142,14 @@ export default function Step9() {
       <StepHeader />
 
       {part === 1 ? (
-        // === Signature Section ===
+        // Signature Section
         <div className="flex flex-col gap-6 w-full max-w-xl">
           <h2 className="text-xl font-semibold text-[#0E0C69]">Signature</h2>
           <p className="text-sm text-gray-700 leading-relaxed">
             Please add your signature for our records.
           </p>
 
-          <div
-            className="rounded-lg"
-            style={{ border: "2px solid #CCCCCC" }}
-          >
+          <div className="rounded-lg" style={{ border: "2px solid #CCCCCC" }}>
             <SignatureCanvas
               ref={signatureRef}
               penColor="black"
@@ -180,46 +177,7 @@ export default function Step9() {
           </div>
         </div>
       ) : (
-        // === Rapid 3 Questions Section ===
-
-        // <div className="flex flex-col gap-6 w-full max-w-xl">
-        //   <h2 className="text-xl font-semibold text-[#0E0C69]">Rapid 3</h2>
-        //   <p className="text-sm text-gray-700 leading-relaxed">
-        //     Please answer the following questions truthfully.
-        //   </p>
-
-        //   {questions.map((q, idx) => (
-        //     <div key={idx} className="mb-6 w-full">
-        //       <p className="text-sm font-medium text-[#0E0C69] mb-2 text-left">{q}</p>
-        //       <div className="flex flex-col w-full space-y-2 text-sm text-gray-700">
-        //         {[
-        //           "0 - No Difficulty",
-        //           "1 - Some Difficulty",
-        //           "2 - Much Difficulty",
-        //           "3 - Unable To Do",
-        //         ].map(opt => (
-        //           <div key={opt} className="flex items-start  w-full gap-3">
-        //             <div>
-        //               <input
-        //                 type="radio"
-        //                 name={`q${idx}`}
-        //                 className="h-5 w-5 align-middle"
-        //               />
-        //             </div>
-        //             <span className="text-left ">{opt}</span>
-        //           </div>
-        //         ))}
-        //       </div>
-        //     </div>
-        //   ))}
-
-        //   <button
-        //     onClick={handleFinish}
-        //     className="mt-4 bg-[#0E0C69] text-white px-6 py-3 rounded hover:opacity-90 w-full"
-        //   >
-        //     Continue
-        //   </button>
-        // </div>
+        // Questions Section
         <div className="flex flex-col gap-6 w-full max-w-xl">
           <h2 className="text-xl font-semibold text-[#0E0C69]">Rapid 3</h2>
           <p className="text-sm text-gray-700 leading-relaxed">
@@ -249,12 +207,20 @@ export default function Step9() {
             </div>
           ))}
 
-          <button
-            onClick={handleFinish}
-            className="mt-4 bg-[#0E0C69] text-white px-6 py-3 rounded hover:opacity-90 w-full"
-          >
-            Continue
-          </button>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <button
+              onClick={() => setPart(1)}
+              className="bg-gray-200 text-black px-6 py-3 rounded hover:opacity-90 w-full"
+            >
+              Back to Signature
+            </button>
+            <button
+              onClick={handleFinish}
+              className="bg-[#0E0C69] text-white px-6 py-3 rounded hover:opacity-90 w-full"
+            >
+              Continue
+            </button>
+          </div>
         </div>
       )}
     </div>

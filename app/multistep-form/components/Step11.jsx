@@ -23,7 +23,7 @@ export default function Step11() {
   const [patientNote, setPatientNote] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
-  const itemsPerPage = 4;
+  const itemsPerPage = 10;
   const totalPages = Math.ceil(medications.length / itemsPerPage);
   const paginatedData = medications.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
