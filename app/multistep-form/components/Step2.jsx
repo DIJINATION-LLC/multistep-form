@@ -22,7 +22,8 @@ export default function Step2() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImageBase64(reader.result.split(",")[1]); // Get pure base64 without prefix
+        // setImageBase64(reader.result.split(",")[1]); // Get pure base64 without prefix
+        setImageBase64(reader.result); // Get pure base64 without prefix
       };
       reader.readAsDataURL(file);
     }

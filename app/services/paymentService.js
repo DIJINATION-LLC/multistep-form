@@ -21,8 +21,15 @@ export const getInsuranceDetails = async (departmentId) => {
 
 export const uploadPatientPhoto = async (patientId, departmentId, imageBase64) => {
   const formData = new FormData();
-  formData.append('image', imageBase64);
+  // formData.append('image', imageBase64);
+  // formData.append('departmentid', departmentId);
+  formData.append('path', `/v1/${process.env.NEXT_PUBLIC_PRACTICE_ID}/patients/${patientId}/photo`);
+  formData.append('method', 'POST');
   formData.append('departmentid', departmentId);
+  debugger
+  // const blob = await (await fetch(imageBase64)).blob();
+  const blob = await fetch(imageBase64).then(res => res.blob());
+  formData.append('image', blob, 'photo.jpg');
 
   // const response = await api.post(`${API_ROUTES.PATIENT_PHOTO(patientId)}`, formData, {
   //   headers: {
@@ -35,8 +42,6 @@ export const uploadPatientPhoto = async (patientId, departmentId, imageBase64) =
   });
 
   return await response.json();
-
-  return response.data;
 };
 
 export const updatePatient = async (patientId, payload) => {
@@ -45,13 +50,13 @@ export const updatePatient = async (patientId, payload) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      path: `/v1/${practiceId}/patients/${patientId}`,
+      path: `${API_ROUTES.UPDATE_PATIENT(patientId)}`,
       method: "PUT",
       contentType: "application/x-www-form-urlencoded",
       body: new URLSearchParams(payload).toString(),
     }),
   });
-  return response.data;
+  return await response.json();
 };
 
 export const uploadPatientSignature = async (patientId, formData) => {
@@ -61,9 +66,9 @@ export const uploadPatientSignature = async (patientId, formData) => {
   //   }
   // });
   const response = await fetch("/api/athena-proxy", {
-    method: "POST",
     body: formData,
   });
+  return await response.json();
 
   return response.data;
 };
@@ -80,5 +85,7 @@ export const addQuestions = async (patientId, encounterId, payload) => {
       body: new URLSearchParams(payload).toString(),
     }),
   });
+  return await response.json();
+
   return response.data;
 };

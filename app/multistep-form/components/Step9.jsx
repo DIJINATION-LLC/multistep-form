@@ -87,16 +87,25 @@ export default function Step9() {
       const base64Pdf = await toBase64(pdfBlob);
 
       // === 3. Strip the prefix (optional, if your API expects just raw base64) ===
-      const base64Content = base64Pdf.split(",")[1]; // Remove "data:application/pdf;base64,"
+      // const base64Content = base64Pdf.split(",")[1]; // Remove "data:application/pdf;base64,"
+      const base64Content = base64Pdf; // Remove "data:application/pdf;base64,"
 
       // === 4. Send to your API ===
       const payload = {
         attachmentcontents: base64Content,
         documentSubclass: "ADMIN_CONSENT",
-        departmentid: patientData?.departmentid
-      };
+        departmentid: patientData?.departmentid,
 
-      await uploadPatientSignature(patientData?.patientid, payload);
+      };
+      const formData = new FormData()
+      formData.append('path', `${API_ROUTES.PATIENT_SIGNATURE(patientData?.patientid)}`);
+      formData.append('method', 'POST');
+      formData.append('documentSubclass', 'ADMIN_CONSENT');
+      formData.append('departmentid', `${patientData?.departmentid}`);
+      const blob = await fetch(base64Pdf).then(res => res.blob());
+      formData.append('attachmentcontents', blob, 'signature.pdf');
+
+      await uploadPatientSignature(patientData?.patientid, formData);
 
       setIsUpdating(false);
     } catch (err) {
