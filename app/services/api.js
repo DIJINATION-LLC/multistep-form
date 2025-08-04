@@ -16,4 +16,24 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
-export default api;
+const fetchFromAthena = async ({
+  path,
+  method = "GET",
+  query = {},
+  body = null,
+  contentType = "application/json",
+}) => {
+  const response = await fetch("/api/athena-proxy", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ path, method, query, body, contentType }),
+  });
+  debugger
+  return await response.json();
+};
+export default {api, fetchFromAthena};
+
+
+
