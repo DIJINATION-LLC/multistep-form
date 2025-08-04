@@ -66,6 +66,7 @@ export const uploadPatientSignature = async (patientId, formData) => {
   //   }
   // });
   const response = await fetch("/api/athena-proxy", {
+    method:"POST",
     body: formData,
   });
   return await response.json();

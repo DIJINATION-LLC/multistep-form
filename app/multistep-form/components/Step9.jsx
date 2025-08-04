@@ -8,6 +8,7 @@ import { Loader } from "./LoaderOverlay";
 import { uploadPatientSignature } from "@/app/services/paymentService";
 import { usePatient } from "../context/PatientContext";
 import { useStep } from "@/app/multistep-form/context/Context";
+import API_ROUTES from "../../services/endpoints";
 
 const questions = [
   "Do you have any known drug allergies?",
@@ -53,7 +54,6 @@ export default function Step9() {
   const handleNextFromSignature = async () => {
     setIsUpdating(true);
     await uploadAndDownloadPdf();
-    setPart(2);
   };
 
   const uploadAndDownloadPdf = async () => {
@@ -113,7 +113,9 @@ export default function Step9() {
 
       await uploadPatientSignature(patientData?.patientid, formData);
       toast.success("Signature uploaded successfully!");
+      setPart(2);
       setIsUpdating(false);
+
     } catch (err) {
       console.error("Signature Upload Error", err);
       toast.error("Failed to upload signature");

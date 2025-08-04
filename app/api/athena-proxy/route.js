@@ -5,7 +5,9 @@ let tokenExpiry = null;
 
 async function getAthenaToken() {
   try {
+
     if (cachedToken !== null && cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
+      console.log("Existing token")
       return cachedToken;
     }
 
@@ -38,7 +40,7 @@ async function getAthenaToken() {
 async function generateToken() {
   try {
     const auth = Buffer.from(`${process.env.NEXT_PUBLIC_CLIENT_ID}:${process.env.NEXT_PUBLIC_CLIENT_SECRET}`).toString('base64');
-
+    console.log("Generating token")
     const response = await fetch(`${process.env.NEXT_PUBLIC_ATHENA_API}/oauth2/v1/token`, {
       method: 'POST',
       headers: {
@@ -55,6 +57,7 @@ async function generateToken() {
     console.log("data:", data)
     cachedToken = data.access_token;
     tokenExpiry = Date.now() + data.expires_in * 1000 - 5000;
+
     return cachedToken;
   } catch (error) {
     console.log("generate token error: ",error);
@@ -82,18 +85,28 @@ export async function POST(req) {
       const path = formData.get('path');
       const method = formData.get('method') || 'POST';
       const departmentId = formData.get('departmentid');
-      const fileBlob = formData.get('image');
+      let fileBlob = formData.get('image');
+      let signature = false;
+      if(!fileBlob){
+        fileBlob = formData.get('attachmentcontents');
+        signature = true;
+      }
 
       // Convert blob to base64 string
       const buffer = Buffer.from(await fileBlob.arrayBuffer());
       const mimeType = fileBlob.type || 'image/jpeg';
       console.log(mimeType)
       const base64Image = `${buffer.toString('base64')}`;
-
       const url = new URL(`${process.env.NEXT_PUBLIC_ATHENA_API}${path}`);
       const athenFormData = new FormData()
-
-      athenFormData.append('image', base64Image);
+      
+      if(signature){
+        console.log("Signature")
+        athenFormData.append('documentSubclass', 'ADMIN_CONSENT');
+        athenFormData.append('attachmentcontents', base64Image);
+      }else{
+        athenFormData.append('image', base64Image);
+      }
       athenFormData.append('departmentid', departmentId);
       const athenaRes = await fetch(url.toString(), {
         method,
