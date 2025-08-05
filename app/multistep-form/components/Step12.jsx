@@ -6,54 +6,41 @@ import helper from "@/app/utils/helper";
 import { useStep } from "@/app/multistep-form/context/Context";
 import { getQuestionnaire } from "@/app/services/questionnaireService";
 import { usePatient } from "@/app/multistep-form/context/PatientContext";
-
 import toast from "react-hot-toast";
 
 export default function Step12() {
-
-  const { patientData  } = usePatient();
+  const { patientData } = usePatient();
   const { setCurrentStep } = useStep();
   const [questions, setQuestions] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
+  const [answers, setAnswers] = useState({});
 
-  const encounterId = 40941;   //harcoded for now
+  const encounterId = 40941; // hardcoded for now
   const patientId = patientData.patientid;
   const departmentId = patientData?.departmentid;
 
-useEffect(() => {
-  const fetchQuestions = async () => {
-    try {
-      debugger
-      const response = await getQuestionnaire({ encounterId, patientId, departmentId });
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await getQuestionnaire({ encounterId, patientId, departmentId });
+        const firstTemplate = response?.questionnairescreeners?.[0]?.sections?.[0]?.questionlist;
 
-      
-      const firstTemplate = response?.questionnairescreeners?.[0]?.sections?.[0]?.questionlist;
-
-      console.log("Template data ", firstTemplate)
-
-      if (!firstTemplate) {
-        toast.error("Wellness questionnaire not found");
-        return;
+        if (!firstTemplate?.length) {
+          toast.error("Wellness questionnaire not found");
+          return;
+        }
+        
+        const filteredQuestions = firstTemplate.filter((q) => [1, 2].includes(q.questionid));
+        setQuestions(filteredQuestions);
+        toast.success("Wellness questions loaded successfully");
+      } catch (error) {
+        console.error("Fetch Questionnaire Error:", error);
+        toast.error("Failed to load wellness questions");
       }
+    };
 
-      const allQuestions = firstTemplate.sections.flatMap(
-        (sec) => sec.questionlist || []
-      );
-
-      const filteredQuestions = allQuestions.filter((q) =>
-        [1, 2].includes(q.questionid)
-      );
-
-      setQuestions(filteredQuestions);
-      toast.success("Wellness questions loaded successfully");
-    } catch (error) {
-      console.error("Fetch Questionnaire Error:", error);
-      toast.error("Failed to load wellness questions");
-    }
-  };
-
-  fetchQuestions();
-}, []);
+    fetchQuestions();
+  }, []);
 
 
   const handleNext = () => {
@@ -71,7 +58,7 @@ useEffect(() => {
           buttonText={helper.successText}
           buttonColor={helper.success}
           img="/success.png"
-          onClose={handleNext}
+          onClose={() => setCurrentStep((prev) => prev + 1)}
         />
       )}
 
@@ -89,15 +76,31 @@ useEffect(() => {
               {q.question} <span className="text-red-500">*</span>
             </p>
             <div className="grid grid-cols-2 gap-3 text-sm">
-              {q.possibleanswers.map((opt, i) => (
-                <label
-                  key={i}
-                  className="border border-[#0E0C69] text-[#0E0C69] text-center py-2 px-3 rounded-md hover:bg-[#0E0C69] hover:text-white cursor-pointer transition"
-                >
-                  <input type="radio" name={`question-${q.questionid}`} value={opt} className="hidden" />
-                  {opt}
-                </label>
-              ))}
+              {q.possibleanswers.map((opt, i) => {
+                const inputId = `question-${q.questionid}-option-${i}`;
+                const selected = answers[q.questionid] === opt;
+
+                return (
+                  <label
+                    key={inputId}
+                    htmlFor={inputId}
+                    className={`border text-center py-2 px-3 rounded-md cursor-pointer transition
+                      ${selected ? "bg-[#0E0C69] text-white" : "border-[#0E0C69] text-[#0E0C69] hover:bg-[#0E0C69] hover:text-white"}
+                    `}
+                  >
+                    <input
+                      type="radio"
+                      id={inputId}
+                      name={`question-${q.questionid}`}
+                      value={opt}
+                      checked={selected}
+                      onChange={() => handleSelectAnswer(q.questionid, opt)}
+                      className="hidden"
+                    />
+                    {opt}
+                  </label>
+                );
+              })}
             </div>
           </div>
         ))}
@@ -106,7 +109,7 @@ useEffect(() => {
 
         <div className="bg-white w-full py-4">
           <button
-            onClick={() => setShowPopup(true)}
+            onClick={handleNext}
             className="w-full bg-[#0E0C69] text-white py-3 rounded-md text-center font-medium hover:opacity-90 transition"
           >
             Continue

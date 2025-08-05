@@ -16,7 +16,18 @@ export const searchMedication = async (query) => {
 };
 
 export const addMedication = async (payload, patientId) => {
-  const formData = new URLSearchParams(payload);
-  const response = await api.fetchFromAthena({ path: `/v1/${process.env.NEXT_PUBLIC_PRACTICE_ID}/chart/${patientId}/medications`, method: "POST", query: payload });
-  return response;
+  // const formData = new URLSearchParams(payload);
+  const response = await fetch("/api/athena-proxy", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      path: `/v1/${process.env.NEXT_PUBLIC_PRACTICE_ID}/chart/${patientId}/medications`,
+      method: "PUT",
+      contentType: "application/x-www-form-urlencoded",
+      body: new URLSearchParams(payload).toString(),
+    }),
+  });
+  return await response.json();
+  // const response = await api.fetchFromAthena({ path: `/v1/${process.env.NEXT_PUBLIC_PRACTICE_ID}/chart/${patientId}/medications`, method: "POST", body: payload });
+  // return response;
 };

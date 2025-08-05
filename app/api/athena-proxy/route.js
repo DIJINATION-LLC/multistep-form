@@ -5,15 +5,15 @@ let tokenExpiry = null;
 
 async function getAthenaToken() {
   try {
-
-    if (cachedToken !== null && cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
+    
+    if (cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
       console.log("Existing token")
       return cachedToken;
     }
 
 
     const auth = Buffer.from(`${process.env.NEXT_PUBLIC_CLIENT_ID}:${process.env.NEXT_PUBLIC_CLIENT_SECRET}`).toString('base64');
-
+    console.log("Generating token")
     const response = await fetch(`${process.env.NEXT_PUBLIC_ATHENA_API}/oauth2/v1/token`, {
       method: 'POST',
       headers: {
