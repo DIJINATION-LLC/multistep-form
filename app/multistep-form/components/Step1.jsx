@@ -9,13 +9,17 @@ import {
 } from "@/app/services/paymentService";
 
 export default function Step1() {
-  const [insuranceName, setInsuranceName] = useState("Self Pay");
+  const [insuranceName, setInsuranceName] = useState("Self Payy");
   const { setPaymentPlan, setAppointmentDetails, patientData } = usePatient();
   const { setCurrentStep } = useStep();
 
   const [amountDue, setAmountDue] = useState(null);
   const [copay, setCopay] = useState(null);
 
+
+  
+
+ 
   useEffect(() => {
     if (patientData?.patientid && patientData?.departmentid) {
       fetchPaymentDetails();
@@ -24,9 +28,11 @@ export default function Step1() {
     }
   }, [patientData]);
 
+
+
   const fetchInsuranceDetails = async () => {
     try {
-      const data = await getInsuranceDetails(patientData.departmentid);
+      const data = await getInsuranceDetails(patientData?.departmentid);
       setInsuranceName(data?.insurances?.[0]?.insuranceplanname || "Self Pay");
     } catch (error) {
       console.error("Insurance Details Error", error);

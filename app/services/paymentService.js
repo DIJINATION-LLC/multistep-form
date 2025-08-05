@@ -6,17 +6,17 @@ export const getPaymentPlan = async (patientId, departmentId) => {
     path: `${API_ROUTES.PAYMENT_PLAN(patientId)}`,
     query: { departmentid: departmentId },
   });
-  return response.data;
+  return response;
 };
 
 export const getAppointmentDetails = async (departmentId) => {
   const response = await api.fetchFromAthena({path: `${API_ROUTES.APPOINTMENTS(departmentId)}`});
-  return response.data;
+  return response;
 };
 
 export const getInsuranceDetails = async (departmentId) => {
   const response = await api.fetchFromAthena({path: `${API_ROUTES.APPOINTMENTS(departmentId)}/insurances`});
-  return response.data;
+  return response;
 };
 
 export const uploadPatientPhoto = async (patientId, departmentId, imageBase64) => {

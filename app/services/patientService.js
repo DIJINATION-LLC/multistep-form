@@ -15,9 +15,13 @@ export const searchPatient = async (firstName, lastName, dob) => {
 
 
 
-export const getInsuranceDetails = async (departmentId) => {
-  const response = await api.fetchFromAthena(
-    {path: `${API_ROUTES.APPOINTMENTS}/${departmentId}/insurances`}
-  );
-  return response.data;
-};
+
+// Repeated Here also in PaymentService.js
+
+// export const getInsuranceDetails = async (departmentId) => {
+  
+//   const response = await api.fetchFromAthena(
+//     {path: `${API_ROUTES.APPOINTMENTS}/${departmentId}/insurances`}
+//   );
+//   return response;
+// };
