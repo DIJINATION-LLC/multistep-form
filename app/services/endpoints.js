@@ -18,7 +18,8 @@ const API_ROUTES = {
   ADD_QUESTIONS:(patientId,encounterId) => `/v1/${paracticeId}/chart/encounter/${encounterId}/questionnairescreeners`,
  MEDICATIONS: (patientId, departmentId) => `/v1/${paracticeId}/chart/${patientId}/medications`,
 //  ADD_MEDICATION : (patientId)=> `/v1/${paracticeId}/chart/${patientId}/medications`,
- SEARCH_MEDICATIONS :  `/v1/${paracticeId}/reference/medications`
+ SEARCH_MEDICATIONS :  `/v1/${paracticeId}/reference/medications`,
+ GET_QUESTIONNAIRE : `/v1/${paracticeId}/chart/configuration/questionnairescreeners` , 
 
 
 };

@@ -189,7 +189,7 @@ export default function Step6() {
           )}
              <button
           onClick={goToNextStep}
-          className="bg-[#0E0C69] text-white font-medium px-20 py- rounded-xl hover:opacity-90"
+          className="bg-[#0E0C69] text-white font-medium px-20 py-3 rounded-xl hover:opacity-90"
         >
           No change
         </button>

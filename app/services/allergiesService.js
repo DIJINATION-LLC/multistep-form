@@ -6,7 +6,7 @@ export const getAllergies = async (patientId , departmentId) => {
     path : `${API_ROUTES.ALLERGIES(patientId , departmentId)}`,
     
   });
-  return response.data;
+  return response;
 };
 
 export const updateAllergies = async ( patientId, departmentId,  payload ) => {

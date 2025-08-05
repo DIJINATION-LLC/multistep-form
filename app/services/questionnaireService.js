@@ -13,3 +13,20 @@ export const postQuestionnaireScreener = async ({ encounterId, templateids }) =>
 
   return response.data;
 };
+
+
+//to get wellness questionnaire based on template ids 
+
+export const getQuestionnaire = async ({encounterId , patientId , departmentId})=> {
+
+  const response = await api.fetchFromAthena({
+    path : `${API_ROUTES.GET_QUESTIONNAIRE}`,
+    query : {
+      departmentid : departmentId,
+      patientid : patientId,
+      encounterid : encounterId,
+    }
+  })
+  return response ;
+
+}
