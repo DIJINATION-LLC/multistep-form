@@ -26,7 +26,7 @@ export const uploadPatientPhoto = async (patientId, departmentId, imageBase64) =
   formData.append('path', `/v1/${process.env.NEXT_PUBLIC_PRACTICE_ID}/patients/${patientId}/photo`);
   formData.append('method', 'POST');
   formData.append('departmentid', departmentId);
-  debugger
+  
   // const blob = await (await fetch(imageBase64)).blob();
   const blob = await fetch(imageBase64).then(res => res.blob());
   formData.append('image', blob, 'photo.jpg');

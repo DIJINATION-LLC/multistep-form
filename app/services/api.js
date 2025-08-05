@@ -30,7 +30,7 @@ const fetchFromAthena = async ({
     },
     body: JSON.stringify({ path, method, query, body, contentType }),
   });
-  debugger
+
   return await response.json();
 };
 export default {api, fetchFromAthena};

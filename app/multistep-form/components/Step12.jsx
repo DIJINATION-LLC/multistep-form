@@ -5,17 +5,20 @@ import AlertPopup from "./AlertPopup";
 import helper from "@/app/utils/helper";
 import { useStep } from "@/app/multistep-form/context/Context";
 import { getQuestionnaire } from "@/app/services/questionnaireService";
+import { usePatient } from "@/app/multistep-form/context/PatientContext";
+
 import toast from "react-hot-toast";
 
 export default function Step12() {
+
+  const { patientData  } = usePatient();
   const { setCurrentStep } = useStep();
   const [questions, setQuestions] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
 
-  // Replace with real values from context or props
-  const encounterId = 40941;
-  const patientId = 1;
-  const departmentId = 1;
+  const encounterId = 40941;   //harcoded for now
+  const patientId = patientData.patientid;
+  const departmentId = patientData?.departmentid;
 
 useEffect(() => {
   const fetchQuestions = async () => {
@@ -33,12 +36,10 @@ useEffect(() => {
         return;
       }
 
-      // Saare sections ka questionlist combine karo
       const allQuestions = firstTemplate.sections.flatMap(
         (sec) => sec.questionlist || []
       );
 
-      // Sirf questionid 1 & 2 filter karo
       const filteredQuestions = allQuestions.filter((q) =>
         [1, 2].includes(q.questionid)
       );

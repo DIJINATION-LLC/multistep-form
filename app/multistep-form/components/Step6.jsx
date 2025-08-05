@@ -54,7 +54,7 @@ export default function Step6() {
   const handleSubmitChanges = async () => {
     setIsUpdating(true);
     try {
-      debugger
+    
       await updatePatient(patientData.patientid, {
         ...form,
         status: "a", // Active status
