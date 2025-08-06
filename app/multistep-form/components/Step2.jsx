@@ -22,7 +22,7 @@ export default function Step2() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        // setImageBase64(reader.result.split(",")[1]); // Get pure base64 without prefix
+        //setImageBase64(reader.result.split(",")[1]); // Get pure base64 without prefix
         setImageBase64(reader.result); // Get pure base64 without prefix
       };
       reader.readAsDataURL(file);
@@ -96,7 +96,7 @@ export default function Step2() {
 
         {imageBase64 && (
           <img
-            src={`data:image/jpeg;base64,${imageBase64}`}
+            src={imageBase64}
             alt="Captured"
             className="mt-4 w-40 h-40 object-cover rounded"
           />

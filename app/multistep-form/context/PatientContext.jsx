@@ -22,7 +22,7 @@ export const PatientProvider = ({ children }) => {
 
   
     const fetchAppointmentDetails = async () => {
-      if (!patientData?.patientid) return;
+      // if (!patientData?.patientid) return;
       try {
         const response = await getAppointmentDetails(patientData?.departmentid);
         setAppointmentDetails(response); 
